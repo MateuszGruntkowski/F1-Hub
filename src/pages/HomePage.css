@@ -1,0 +1,18 @@
+.standings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid darkblue;
+}
+
+.driver {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.constructor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
