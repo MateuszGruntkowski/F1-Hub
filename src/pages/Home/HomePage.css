@@ -304,6 +304,17 @@
   font-size: 0.92rem;
   font-weight: 500;
   color: var(--text);
+  display: flex;
+  align-items: center;
+}
+
+.team-swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 7px;
+  flex-shrink: 0;
 }
 
 .standings-row .pts {

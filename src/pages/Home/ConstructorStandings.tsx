@@ -1,5 +1,6 @@
 import type { ConstructorStanding } from "../../types/constructorStanding";
 import { useConstructorStandings } from "../../hooks/useConstructorStandings";
+import { getTeamColor } from "../../constants/teamColors";
 
 export function ConstructorStandings() {
   const constructorStandings = useConstructorStandings();
@@ -20,7 +21,17 @@ export function ConstructorStandings() {
               {String(constructorStanding.position).padStart(2, "0")}
             </div>
             <div className="who">
-              <div className="name">{constructorStanding.Constructor.name}</div>
+              <div className="name">
+                <span
+                  className="team-swatch"
+                  style={{
+                    background: getTeamColor(
+                      constructorStanding.Constructor.constructorId,
+                    ),
+                  }}
+                />
+                {constructorStanding.Constructor.name}
+              </div>
             </div>
             <div className="pts">
               {constructorStanding.points}
