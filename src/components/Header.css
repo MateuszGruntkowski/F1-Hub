@@ -56,7 +56,6 @@
   background: var(--surface-2);
 }
 
-/* react-router's NavLink adds this class automatically on the active route */
 .nav-link.active {
   color: var(--text);
   background: var(--surface-2);

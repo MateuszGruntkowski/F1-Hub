@@ -1,21 +1,8 @@
-import { useEffect, useState } from "react";
 import type { DriverStanding } from "../../types/driverStanding";
-import { getDriverStandings } from "../../api/driverStandingsApi";
+import { useDriverStandings } from "../../hooks/useDriverStandings";
 
 export function DriverStandings() {
-  const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
-
-  useEffect(() => {
-    async function fetchDriverStandings() {
-      try {
-        const driverStandings = await getDriverStandings(2026);
-        setDriverStandings(driverStandings);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchDriverStandings();
-  }, []);
+  const driverStandings = useDriverStandings();
 
   return (
     <div className="standings-panel">

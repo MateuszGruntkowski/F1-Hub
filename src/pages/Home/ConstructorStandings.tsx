@@ -1,23 +1,8 @@
-import { useEffect, useState } from "react";
 import type { ConstructorStanding } from "../../types/constructorStanding";
-import { getConstructorStandings } from "../../api/constructorStandingsApi";
+import { useConstructorStandings } from "../../hooks/useConstructorStandings";
 
 export function ConstructorStandings() {
-  const [constructorStandings, setConstructorStandings] = useState<
-    ConstructorStanding[]
-  >([]);
-
-  useEffect(() => {
-    async function fetchConstructorStandings() {
-      try {
-        const constructorStandings = await getConstructorStandings(2026);
-        setConstructorStandings(constructorStandings);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchConstructorStandings();
-  }, []);
+  const constructorStandings = useConstructorStandings();
 
   return (
     <div className="standings-panel">
