@@ -22,7 +22,6 @@ export function HomePage({ races }: HomePageProps) {
     async function fetchDriverStandings() {
       try {
         const driverStandings = await getDriverStandings(2026);
-        console.log(driverStandings);
         setDriverStandings(driverStandings);
       } catch (error) {
         console.log(error);
@@ -35,7 +34,6 @@ export function HomePage({ races }: HomePageProps) {
     async function fetchConstructorStandings() {
       try {
         const constructorStandings = await getConstructorStandings(2026);
-        console.log(constructorStandings);
         setConstructorStandings(constructorStandings);
       } catch (error) {
         console.log(error);
@@ -56,11 +54,35 @@ export function HomePage({ races }: HomePageProps) {
     return <div>No upcoming Races.</div>;
   }
 
+  const lastRace: Race | undefined = [...races]
+    .sort((a, b) => {
+      return dayjs(b.date).valueOf() - dayjs(a.date).valueOf();
+    })
+    .find((race) => dayjs(race.date).valueOf() < now.valueOf());
+
+  if (!lastRace) {
+    return <div>No previous Races.</div>;
+  }
+
   return (
     <>
-      <div>NEXT RACE:</div>
-      <div>{nextRace.raceName}</div>
-      <div>{dayjs(nextRace.date).format("YYYY-MM-DD")}</div>
+      <div className="next-race">
+        <div>Next race</div>
+        <div>Round: {nextRace.round}</div>
+        <div>{nextRace.raceName}</div>
+        <div>
+          {nextRace.Circuit.circuitName} - {nextRace.Circuit.Location.country},{" "}
+          {nextRace.Circuit.Location.locality}
+        </div>
+        <div>{dayjs(nextRace.date).format("ddd, D MMM")}</div>
+        <div>{nextRace.time.slice(0, 5)}</div>
+      </div>
+
+      <div>Last Race - {lastRace.raceName}</div>
+      <div>
+        {lastRace.Circuit.Location.country} &#183;{" "}
+        {dayjs(lastRace.date).format("D MMM")}
+      </div>
 
       <div className="standings">
         <div className="driver-standings">
@@ -72,12 +94,11 @@ export function HomePage({ races }: HomePageProps) {
             .map((driverStanding: DriverStanding) => {
               return (
                 <div key={driverStanding.Driver.driverId} className="driver">
-                  <div>Position: {driverStanding.position}</div>
+                  <div>{driverStanding.position}</div>
                   <div>
-                    Name:{" "}
                     {`${driverStanding.Driver.givenName} ${driverStanding.Driver.familyName}`}
                   </div>
-                  <div>Points: {driverStanding.points}</div>
+                  <div>{driverStanding.points} PTS</div>
                 </div>
               );
             })}
@@ -96,9 +117,9 @@ export function HomePage({ races }: HomePageProps) {
                   key={constructorStanding.Constructor.constructorId}
                   className="constructor"
                 >
-                  <div>Position: {constructorStanding.position}</div>
-                  <div>Name: {constructorStanding.Constructor.name}</div>
-                  <div>Points: {constructorStanding.points}</div>
+                  <div>{constructorStanding.position}</div>
+                  <div>{constructorStanding.Constructor.name}</div>
+                  <div>{constructorStanding.points}PTS</div>
                 </div>
               );
             })}

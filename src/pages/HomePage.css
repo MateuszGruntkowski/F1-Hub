@@ -16,3 +16,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.next-race {
+  border: 2px solid darkgreen;
+}
