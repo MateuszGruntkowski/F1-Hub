@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import type { RaceBase } from "../types/race";
+import type { RaceBase } from "../../types/race";
 import { getRaceDateTime } from "./dateUtils";
-import { useCountdown } from "../hooks/useCountdown";
+import { useCountdown } from "../../hooks/useCountdown";
 
 type NextRaceProps = {
   races: RaceBase[];

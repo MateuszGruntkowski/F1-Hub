@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import type { RaceBase } from "../types/race";
+import type { RaceBase } from "../../types/race";
 import { getRaceDateTime } from "./dateUtils";
 import dayjs from "dayjs";
-import type { Result } from "../types/results";
-import { getResults } from "../api/resultsApi";
+import type { Result } from "../../types/results";
+import { getResults } from "../../api/resultsApi";
 
 type LastRaceProps = {
   races: RaceBase[];

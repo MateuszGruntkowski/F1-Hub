@@ -3,7 +3,9 @@ import { getRaces } from "./api/racesApi";
 import "./App.css";
 import type { RaceBase } from "./types/race";
 import { Header } from "./components/Header";
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "./pages/Home/HomePage";
+import { Route, Routes } from "react-router";
+import { RacesPage } from "./pages/Races/RacesPage";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
@@ -24,7 +26,10 @@ function App() {
   return (
     <>
       <Header />
-      <HomePage races={races} />
+      <Routes>
+        <Route path="/" element={<HomePage races={races} />} />
+        <Route path="/races" element={<RacesPage races={races} />} />
+      </Routes>
     </>
   );
 }

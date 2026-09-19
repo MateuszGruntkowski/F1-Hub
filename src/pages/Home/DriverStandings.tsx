@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { DriverStanding } from "../types/driverStanding";
-import { getDriverStandings } from "../api/driverStandingsApi";
+import type { DriverStanding } from "../../types/driverStanding";
+import { getDriverStandings } from "../../api/driverStandingsApi";
 
 export function DriverStandings() {
   const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
