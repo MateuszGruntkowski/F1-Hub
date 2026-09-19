@@ -1,0 +1,159 @@
+/* ---------- PAGE HEADER (full-bleed, same pattern as races-header) ---------- */
+
+.standings-header {
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(
+    ellipse 700px 320px at 85% -20%,
+    var(--accent-soft),
+    transparent 60%
+  );
+}
+
+.standings-header__bar {
+  padding-top: 44px;
+  padding-bottom: 30px;
+}
+
+.standings-header__bar h1 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  color: var(--text);
+}
+
+.standings-header .after-round {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* ---------- STANDINGS GRID ---------- */
+
+.standings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  margin: 32px 0 48px;
+}
+
+.standings-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panel-title {
+  padding: 18px 22px;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title .count {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim-2);
+  font-weight: 500;
+}
+
+.col-labels {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 14px;
+  padding: 10px 22px;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.col-labels .pts-col {
+  text-align: right;
+}
+
+.standings-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 13px 22px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.standings-row:last-child {
+  border-bottom: none;
+}
+
+.standings-row:hover {
+  background: var(--surface-2);
+}
+
+.standings-row .pos {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-dim-2);
+}
+
+.standings-row.top3 .pos {
+  color: var(--flag);
+}
+
+.standings-row .who .name {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.standings-row .who .sub {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.standings-row .pts {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.88rem;
+  color: var(--text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.standings-row .pts span {
+  color: var(--text-dim-2);
+  font-size: 0.72rem;
+  margin-left: 3px;
+}
+
+.team-swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 7px;
+  flex-shrink: 0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 860px) {
+  .standings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .col-labels {
+    display: none;
+  }
+}
