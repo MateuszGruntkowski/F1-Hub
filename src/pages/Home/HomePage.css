@@ -1,10 +1,7 @@
 /* ---------- NEXT RACE ---------- */
 
 .next-race {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border-bottom: 1px solid var(--border);
   background:
     radial-gradient(
       ellipse 700px 320px at 85% -20%,
@@ -12,8 +9,11 @@
       transparent 60%
     ),
     var(--bg);
-  padding: 32px 32px 28px;
-  margin-bottom: 32px;
+}
+
+.next-race__inner {
+  padding-top: 44px;
+  padding-bottom: 40px;
 }
 
 .next-race--empty {
@@ -125,7 +125,7 @@
 /* ---------- LAST RACE / PODIUM ---------- */
 
 .last-race {
-  margin-bottom: 40px;
+  margin: 32px 0 40px;
 }
 
 .last-race--empty {

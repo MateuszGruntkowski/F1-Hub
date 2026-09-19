@@ -21,47 +21,50 @@ export function NextRace({ races }: NextRaceProps) {
 
   return (
     <div className="next-race">
-      <div className="next-race__eyebrow">
-        <span className="round-chip">Round {nextRace.round}</span>
-        <span className="next-label">Next race</span>
-      </div>
-
-      <div className="next-race__body">
-        <div className="next-race__info">
-          <h2 className="next-race__name">{nextRace.raceName}</h2>
-          <div className="next-race__location">
-            {nextRace.Circuit.circuitName} — {nextRace.Circuit.Location.country}
-            , {nextRace.Circuit.Location.locality}
-          </div>
-          <div className="next-race__meta">
-            <div>
-              <strong>{dayjs(nextRace.date).format("ddd, D MMM")}</strong>Race
-              day
-            </div>
-            <div>
-              <strong>{nextRace.time?.slice(0, 5)}</strong>Lights out
-            </div>
-          </div>
+      <div className="page next-race__inner">
+        <div className="next-race__eyebrow">
+          <span className="round-chip">Round {nextRace.round}</span>
+          <span className="next-label">Next race</span>
         </div>
 
-        <div className="countdown-card">
-          <div className="countdown-card__label">Time to lights out</div>
-          <div className="countdown">
-            <div>
-              <div className="countdown__num">{days}</div>
-              <div className="countdown__unit">Days</div>
+        <div className="next-race__body">
+          <div className="next-race__info">
+            <h2 className="next-race__name">{nextRace.raceName}</h2>
+            <div className="next-race__location">
+              {nextRace.Circuit.circuitName} —{" "}
+              {nextRace.Circuit.Location.country},{" "}
+              {nextRace.Circuit.Location.locality}
             </div>
-            <div>
-              <div className="countdown__num">{hours}</div>
-              <div className="countdown__unit">Hours</div>
+            <div className="next-race__meta">
+              <div>
+                <strong>{dayjs(nextRace.date).format("ddd, D MMM")}</strong>Race
+                day
+              </div>
+              <div>
+                <strong>{nextRace.time?.slice(0, 5)}</strong>Lights out
+              </div>
             </div>
-            <div>
-              <div className="countdown__num">{minutes}</div>
-              <div className="countdown__unit">Min</div>
-            </div>
-            <div>
-              <div className="countdown__num">{seconds}</div>
-              <div className="countdown__unit">Sec</div>
+          </div>
+
+          <div className="countdown-card">
+            <div className="countdown-card__label">Time to lights out</div>
+            <div className="countdown">
+              <div>
+                <div className="countdown__num">{days}</div>
+                <div className="countdown__unit">Days</div>
+              </div>
+              <div>
+                <div className="countdown__num">{hours}</div>
+                <div className="countdown__unit">Hours</div>
+              </div>
+              <div>
+                <div className="countdown__num">{minutes}</div>
+                <div className="countdown__unit">Min</div>
+              </div>
+              <div>
+                <div className="countdown__num">{seconds}</div>
+                <div className="countdown__unit">Sec</div>
+              </div>
             </div>
           </div>
         </div>

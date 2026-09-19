@@ -62,7 +62,10 @@ export function RacesGrid({ races }: RacesGridProps) {
               </div>
               <div className="race-result">
                 {winner ? (
-                  <span className="winner">{winner.Driver.familyName} won</span>
+                  <span className="winner">
+                    {winner.Driver.givenName[0]}. {winner.Driver.familyName}{" "}
+                    <span style={{ color: "var(--text-dim)" }}>won</span>
+                  </span>
                 ) : isNext ? (
                   <span className="tbd">Next race</span>
                 ) : (
