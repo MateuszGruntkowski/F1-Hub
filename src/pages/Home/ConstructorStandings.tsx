@@ -20,24 +20,29 @@ export function ConstructorStandings() {
   }, []);
 
   return (
-    <div className="constructor-standings">
-      <div>Constructors</div>
+    <div className="standings-panel">
+      <div className="panel-title">Constructors</div>
       {constructorStandings
         .slice()
         .sort((a, b) => b.points - a.points)
         .slice(0, 5)
-        .map((constructorStanding: ConstructorStanding) => {
-          return (
-            <div
-              key={constructorStanding.Constructor.constructorId}
-              className="constructor"
-            >
-              <div>{constructorStanding.position}</div>
-              <div>{constructorStanding.Constructor.name}</div>
-              <div>{constructorStanding.points}PTS</div>
+        .map((constructorStanding: ConstructorStanding) => (
+          <div
+            key={constructorStanding.Constructor.constructorId}
+            className={`standings-row${constructorStanding.position === 1 ? " lead" : ""}`}
+          >
+            <div className="pos">
+              {String(constructorStanding.position).padStart(2, "0")}
             </div>
-          );
-        })}
+            <div className="who">
+              <div className="name">{constructorStanding.Constructor.name}</div>
+            </div>
+            <div className="pts">
+              {constructorStanding.points}
+              <span>PTS</span>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

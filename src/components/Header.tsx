@@ -3,16 +3,27 @@ import "./Header.css";
 
 export function Header() {
   return (
-    <>
-      <div className="header">
-        <div className="left-section">F1 Hub</div>
-        <div className="right-section">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/races">Races</NavLink>
-          <NavLink to="/drivers">Drivers</NavLink>
-          <NavLink to="/standings">Standings</NavLink>
+    <header className="header">
+      <div className="page header__bar">
+        <div className="header__brand">
+          <span className="header__dot" />
+          F1 Hub
         </div>
+        <nav className="header__nav">
+          <NavLink to="/" end className="nav-link">
+            Home
+          </NavLink>
+          <NavLink to="/races" className="nav-link">
+            Races
+          </NavLink>
+          <NavLink to="/drivers" className="nav-link">
+            Drivers
+          </NavLink>
+          <NavLink to="/standings" className="nav-link">
+            Standings
+          </NavLink>
+        </nav>
       </div>
-    </>
+    </header>
   );
 }

@@ -4,15 +4,15 @@ import { ConstructorStandings } from "./ConstructorStandings";
 
 export function Standings() {
   return (
-    <div>
-      <div>
-        <div>Championship standings</div>
+    <section className="standings-section">
+      <div className="section-head">
+        <h2>Championship standings</h2>
         <Link to="/standings">Full standings</Link>
       </div>
       <div className="standings">
         <DriverStandings />
         <ConstructorStandings />
       </div>
-    </div>
+    </section>
   );
 }

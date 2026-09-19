@@ -10,10 +10,10 @@ type HomePageProps = {
 
 export function HomePage({ races }: HomePageProps) {
   return (
-    <>
+    <div className="page">
       <NextRace races={races} />
       <LastRace races={races} />
       <Standings />
-    </>
+    </div>
   );
 }

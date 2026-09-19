@@ -1,26 +1,347 @@
-.standings {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid darkblue;
-}
-
-.driver {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.constructor {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+/* ---------- NEXT RACE ---------- */
 
 .next-race {
-  border: 2px solid darkgreen;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background:
+    radial-gradient(
+      ellipse 700px 320px at 85% -20%,
+      var(--accent-soft),
+      transparent 60%
+    ),
+    var(--bg);
+  padding: 32px 32px 28px;
+  margin-bottom: 32px;
 }
 
+.next-race--empty {
+  padding: 24px;
+  color: var(--text-dim);
+}
+
+.next-race__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.round-chip {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--flag);
+  background: rgba(200, 255, 61, 0.08);
+  border: 1px solid rgba(200, 255, 61, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.next-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.next-race__body {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 32px;
+  align-items: end;
+}
+
+.next-race__name {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.next-race__location {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+}
+
+.next-race__meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.next-race__meta strong {
+  color: var(--text);
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: "Oswald", sans-serif;
+}
+
+.countdown-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 22px 18px;
+}
+
+.countdown-card__label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.countdown > div {
+  text-align: center;
+}
+
+.countdown__num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.countdown__unit {
+  font-size: 0.68rem;
+  color: var(--text-dim-2);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- LAST RACE / PODIUM ---------- */
+
 .last-race {
-  border: 2px solid darkorange;
+  margin-bottom: 40px;
+}
+
+.last-race--empty {
+  color: var(--text-dim);
+}
+
+.last-race__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+
+.last-race__name {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.last-race__date {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+
+.podium-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.podium-card--p1 {
+  border-color: rgba(228, 0, 43, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(228, 0, 43, 0.08),
+    var(--surface) 60%
+  );
+  padding-top: 28px;
+}
+
+.podium-card__pos {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-dim-2);
+  margin-bottom: 12px;
+}
+
+.podium-card--p1 .podium-card__pos {
+  color: var(--flag);
+}
+
+.podium-card__driver {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.podium-card__team {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.podium-card__time {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.podium-card--p1 .podium-card__time {
+  color: var(--flag);
+}
+
+/* ---------- STANDINGS ---------- */
+
+.standings-section {
+  margin-bottom: 48px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+
+.section-head h2 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.section-head a {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.section-head a:hover {
+  color: var(--flag);
+}
+
+.standings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.standings-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panel-title {
+  padding: 16px 20px;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+
+.standings-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.standings-row:last-child {
+  border-bottom: none;
+}
+
+.standings-row:hover {
+  background: var(--surface-2);
+}
+
+.standings-row .pos {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-dim-2);
+}
+
+.standings-row.lead .pos {
+  color: var(--flag);
+}
+
+.standings-row .who .name {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.standings-row .pts {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.88rem;
+  color: var(--text);
+  text-align: right;
+}
+
+.standings-row .pts span {
+  color: var(--text-dim-2);
+  font-size: 0.72rem;
+  margin-left: 3px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 860px) {
+  .next-race__body {
+    grid-template-columns: 1fr;
+  }
+  .podium {
+    grid-template-columns: 1fr;
+  }
+  .podium-card--p1 {
+    order: -1;
+  }
+  .standings {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .next-race {
+    padding: 24px 20px 20px;
+  }
+  .countdown__num {
+    font-size: 1.3rem;
+    padding: 8px 0;
+  }
 }

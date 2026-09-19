@@ -1,0 +1,185 @@
+/* ---------- RACES PAGE HEADER ---------- */
+
+.races-header {
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(
+    ellipse 700px 320px at 85% -20%,
+    var(--accent-soft),
+    transparent 60%
+  );
+}
+
+.races-header__bar {
+  padding-top: 44px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.race-calendar {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  color: var(--text);
+  margin: 0;
+}
+
+.season-meta {
+  display: flex;
+  gap: 28px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.season-meta strong {
+  color: var(--text);
+  font-weight: 600;
+  font-family: "JetBrains Mono", monospace;
+  margin-right: 4px;
+}
+
+/* ---------- RACES GRID (list of all races) ---------- */
+
+.races-grid-legend {
+  display: grid;
+  grid-template-columns: 56px 1fr 200px 100px;
+  padding: 0 22px;
+  margin: 24px 0 10px;
+  font-size: 0.72rem;
+  color: var(--text-dim-2);
+  letter-spacing: 0.03em;
+}
+
+.races-grid {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+  margin: 0 0 48px;
+}
+
+.race-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 200px 100px 12px;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.race-row:last-child {
+  border-bottom: none;
+}
+
+.race-row:hover {
+  background: var(--surface-2);
+}
+
+.race-row:focus-visible {
+  outline: 2px solid var(--flag);
+  outline-offset: -2px;
+}
+
+.round {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim-2);
+}
+
+.race-row.is-next .round {
+  color: var(--flag);
+}
+
+.race-row.is-done .round {
+  color: var(--text-dim);
+}
+
+.race-main .gp-name {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.race-main .circuit {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.race-result {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.race-result .winner {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.race-result .tbd {
+  color: var(--text-dim-2);
+}
+
+.race-date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.status-dot {
+  justify-self: end;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim-2);
+}
+
+.race-row.is-next .status-dot {
+  background: var(--flag);
+}
+
+.race-row.is-done .status-dot {
+  opacity: 0.5;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 760px) {
+  .races-grid-legend {
+    display: none;
+  }
+
+  .race-row {
+    grid-template-columns: 40px 1fr 12px;
+    grid-template-areas:
+      "round main dot"
+      "round result result"
+      "round date date";
+    row-gap: 4px;
+    padding: 14px 18px;
+  }
+
+  .round {
+    grid-area: round;
+  }
+  .race-main {
+    grid-area: main;
+  }
+  .race-result {
+    grid-area: result;
+  }
+  .race-date {
+    grid-area: date;
+    text-align: left;
+  }
+  .status-dot {
+    grid-area: dot;
+  }
+}

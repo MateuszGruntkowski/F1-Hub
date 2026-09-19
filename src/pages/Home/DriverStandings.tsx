@@ -18,23 +18,32 @@ export function DriverStandings() {
   }, []);
 
   return (
-    <div className="driver-standings">
-      <div>Drivers</div>
+    <div className="standings-panel">
+      <div className="panel-title">Drivers</div>
       {driverStandings
         .slice()
         .sort((a, b) => a.position - b.position)
         .slice(0, 5)
-        .map((driverStanding: DriverStanding) => {
-          return (
-            <div key={driverStanding.Driver.driverId} className="driver">
-              <div>{driverStanding.position}</div>
-              <div>
-                {`${driverStanding.Driver.givenName} ${driverStanding.Driver.familyName}`}
-              </div>
-              <div>{driverStanding.points} PTS</div>
+        .map((driverStanding: DriverStanding) => (
+          <div
+            key={driverStanding.Driver.driverId}
+            className={`standings-row${driverStanding.position === 1 ? " lead" : ""}`}
+          >
+            <div className="pos">
+              {String(driverStanding.position).padStart(2, "0")}
             </div>
-          );
-        })}
+            <div className="who">
+              <div className="name">
+                {driverStanding.Driver.givenName}{" "}
+                {driverStanding.Driver.familyName}
+              </div>
+            </div>
+            <div className="pts">
+              {driverStanding.points}
+              <span>PTS</span>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

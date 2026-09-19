@@ -1,5 +1,38 @@
+:root {
+  --bg: #0a0c10;
+  --surface: #12151b;
+  --surface-2: #1a1e26;
+  --border: #262b34;
+  --text: #edeef0;
+  --text-dim: #868c98;
+  --text-dim-2: #565c68;
+  --accent: #e4002b;
+  --accent-soft: rgba(228, 0, 43, 0.12);
+  --flag: #c8ff3d;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
 }
