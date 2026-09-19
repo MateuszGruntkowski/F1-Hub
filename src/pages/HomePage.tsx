@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { Race } from "../types/race";
+import type { RaceBase } from "../types/race";
 import { useEffect, useState } from "react";
 import { getDriverStandings } from "../api/driverStandingsApi";
 import type { DriverStanding } from "../types/driverStanding";
@@ -7,9 +7,11 @@ import { getConstructorStandings } from "../api/constructorStandingsApi";
 import type { ConstructorStanding } from "../types/constructorStanding";
 import "./HomePage.css";
 import { Link } from "react-router";
+import { getResults } from "../api/resultsApi";
+import type { Result } from "../types/results";
 
 type HomePageProps = {
-  races: Race[];
+  races: RaceBase[];
 };
 
 export function HomePage({ races }: HomePageProps) {
@@ -17,6 +19,8 @@ export function HomePage({ races }: HomePageProps) {
   const [constructorStandings, setConstructorStandings] = useState<
     ConstructorStanding[]
   >([]);
+
+  const [results, setResults] = useState<Result[]>([]);
 
   useEffect(() => {
     async function fetchDriverStandings() {
@@ -43,8 +47,22 @@ export function HomePage({ races }: HomePageProps) {
     fetchConstructorStandings();
   }, []);
 
+  useEffect(() => {
+    async function fetchResults() {
+      try {
+        const results = await getResults(2026, 10);
+        console.log(results);
+        setResults(results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchResults();
+  }, []);
+
   const now = dayjs();
-  const nextRace: Race | undefined = [...races]
+  const nextRace: RaceBase | undefined = [...races]
     .sort((a, b) => {
       return dayjs(a.date).valueOf() - dayjs(b.date).valueOf();
     })
@@ -54,7 +72,7 @@ export function HomePage({ races }: HomePageProps) {
     return <div>No upcoming Races.</div>;
   }
 
-  const lastRace: Race | undefined = [...races]
+  const lastRace: RaceBase | undefined = [...races]
     .sort((a, b) => {
       return dayjs(b.date).valueOf() - dayjs(a.date).valueOf();
     })
@@ -75,18 +93,41 @@ export function HomePage({ races }: HomePageProps) {
           {nextRace.Circuit.Location.locality}
         </div>
         <div>{dayjs(nextRace.date).format("ddd, D MMM")}</div>
-        <div>{nextRace.time.slice(0, 5)}</div>
+        <div>{nextRace.time?.slice(0, 5)}</div>
       </div>
 
-      <div>Last Race - {lastRace.raceName}</div>
+      <div className="last-race">
+        <div>Last Race - {lastRace.raceName}</div>
+        <div>
+          {lastRace.Circuit.Location.country} &#183;{" "}
+          {dayjs(lastRace.date).format("D MMM")}
+        </div>
+
+        {results
+          .sort((a, b) => a.position - b.position)
+          .slice(0, 3)
+          .map((result) => {
+            return (
+              <div key={result.Driver.driverId}>
+                P{result.position}
+                <div>
+                  <div>{result.Driver.givenName}</div>
+                  <div>{result.Driver.familyName}</div>
+                </div>
+                <div>{result.Constructor.name}</div>
+                <div>{result.Time?.time}</div>
+              </div>
+            );
+          })}
+      </div>
+
       <div>
-        {lastRace.Circuit.Location.country} &#183;{" "}
-        {dayjs(lastRace.date).format("D MMM")}
+        <div>Championship standings</div>
+        <Link to="/standings">Full standings</Link>
       </div>
-
       <div className="standings">
         <div className="driver-standings">
-          <div>DRIVER STANDINGS</div>
+          <div>Drivers</div>
           {driverStandings
             .slice()
             .sort((a, b) => a.position - b.position)
@@ -102,11 +143,10 @@ export function HomePage({ races }: HomePageProps) {
                 </div>
               );
             })}
-          <Link to="/standings">View All</Link>
         </div>
 
         <div className="constructor-standings">
-          <div>Constructor Standings</div>
+          <div>Constructors</div>
           {constructorStandings
             .slice()
             .sort((a, b) => b.points - a.points)
@@ -123,7 +163,6 @@ export function HomePage({ races }: HomePageProps) {
                 </div>
               );
             })}
-          <Link to="/standings">View All</Link>
         </div>
       </div>
     </>

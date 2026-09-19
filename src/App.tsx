@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getRaces } from "./api/racesApi";
 import "./App.css";
-import type { Race } from "./types/race";
+import type { RaceBase } from "./types/race";
 import { Header } from "./components/Header";
 import { HomePage } from "./pages/HomePage";
 
 function App() {
-  const [races, setRaces] = useState<Race[]>([]);
+  const [races, setRaces] = useState<RaceBase[]>([]);
 
   useEffect(() => {
     async function fetchRaces() {
