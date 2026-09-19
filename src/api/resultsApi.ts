@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getResults(season: number, round: number) {
+export async function getResults(season?: string, round?: string) {
   const response = await axios.get(
     `https://api.jolpi.ca/ergast/f1/${season}/${round}/results/`,
   );

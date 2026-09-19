@@ -9,18 +9,37 @@ import "./HomePage.css";
 import { Link } from "react-router";
 import { getResults } from "../api/resultsApi";
 import type { Result } from "../types/results";
+import { useCountdown } from "../hooks/useCountdown";
 
 type HomePageProps = {
   races: RaceBase[];
 };
+
+function getRaceDateTime(race: RaceBase) {
+  return dayjs(`${race.date}T${race.time ?? "00:00:00Z"}`);
+}
 
 export function HomePage({ races }: HomePageProps) {
   const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
   const [constructorStandings, setConstructorStandings] = useState<
     ConstructorStanding[]
   >([]);
-
   const [results, setResults] = useState<Result[]>([]);
+
+  const now = dayjs();
+
+  const nextRace: RaceBase | undefined = [...races]
+    .sort((a, b) => getRaceDateTime(a).valueOf() - getRaceDateTime(b).valueOf())
+    .find((race) => getRaceDateTime(race).valueOf() >= now.valueOf());
+
+  const lastRace: RaceBase | undefined = [...races]
+    .sort((a, b) => getRaceDateTime(b).valueOf() - getRaceDateTime(a).valueOf())
+    .find((race) => getRaceDateTime(race).valueOf() < now.valueOf());
+
+  const { days, hours, minutes, seconds } = useCountdown(
+    nextRace?.date,
+    nextRace?.time,
+  );
 
   useEffect(() => {
     async function fetchDriverStandings() {
@@ -43,40 +62,24 @@ export function HomePage({ races }: HomePageProps) {
         console.log(error);
       }
     }
-
     fetchConstructorStandings();
   }, []);
 
   useEffect(() => {
     async function fetchResults() {
       try {
-        const results = await getResults(2026, 10);
-        console.log(results);
+        const results = await getResults(nextRace?.season, nextRace?.round);
         setResults(results);
       } catch (error) {
         console.log(error);
       }
     }
-
     fetchResults();
   }, []);
-
-  const now = dayjs();
-  const nextRace: RaceBase | undefined = [...races]
-    .sort((a, b) => {
-      return dayjs(a.date).valueOf() - dayjs(b.date).valueOf();
-    })
-    .find((race) => dayjs(race.date).valueOf() >= now.valueOf());
 
   if (!nextRace) {
     return <div>No upcoming Races.</div>;
   }
-
-  const lastRace: RaceBase | undefined = [...races]
-    .sort((a, b) => {
-      return dayjs(b.date).valueOf() - dayjs(a.date).valueOf();
-    })
-    .find((race) => dayjs(race.date).valueOf() < now.valueOf());
 
   if (!lastRace) {
     return <div>No previous Races.</div>;
@@ -94,6 +97,14 @@ export function HomePage({ races }: HomePageProps) {
         </div>
         <div>{dayjs(nextRace.date).format("ddd, D MMM")}</div>
         <div>{nextRace.time?.slice(0, 5)}</div>
+
+        <div>Time to lights out</div>
+        <div>
+          <div>{days} Days</div>
+          <div>{hours} Hours</div>
+          <div>{minutes} Min</div>
+          <div>{seconds} Sec</div>
+        </div>
       </div>
 
       <div className="last-race">
@@ -103,7 +114,7 @@ export function HomePage({ races }: HomePageProps) {
           {dayjs(lastRace.date).format("D MMM")}
         </div>
 
-        {results
+        {[...results]
           .sort((a, b) => a.position - b.position)
           .slice(0, 3)
           .map((result) => {
