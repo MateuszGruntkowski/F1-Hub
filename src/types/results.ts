@@ -8,7 +8,7 @@ export type Result = {
   points: string;
   Driver: Driver;
   Constructor: Constructor;
-  grid: string;
+  grid: number;
   laps: string;
   status: string;
   Time?: { millis: string; time: string };

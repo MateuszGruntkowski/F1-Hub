@@ -52,7 +52,7 @@ export function RacesGrid({ races }: RacesGridProps) {
           return (
             <Link
               key={race.round}
-              to={`/races/${race.round}`}
+              to={`/races/${race.season}/${race.round}`}
               className={`race-row${isNext ? " is-next" : ""}${isDone ? " is-done" : ""}`}
             >
               <div className="round">{String(index + 1).padStart(2, "0")}</div>

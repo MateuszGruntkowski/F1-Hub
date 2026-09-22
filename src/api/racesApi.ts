@@ -7,3 +7,13 @@ export async function getRaces(season: number): Promise<RaceBase[]> {
   );
   return response.data.MRData.RaceTable.Races;
 }
+
+export async function getRace(
+  season: number,
+  round: number,
+): Promise<RaceBase> {
+  const response = await axios.get(
+    `https://api.jolpi.ca/ergast/f1/${season}/${round}/races/`,
+  );
+  return response.data.MRData.RaceTable.Races[0] ?? {};
+}

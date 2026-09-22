@@ -7,6 +7,7 @@ import { HomePage } from "./pages/Home/HomePage";
 import { Route, Routes } from "react-router";
 import { RacesPage } from "./pages/Races/RacesPage";
 import { StandingsPage } from "./pages/Standings/StandingsPage";
+import { RaceDetailsPage } from "./pages/RaceDetails/RaceDetailsPage";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
@@ -30,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage races={races} />} />
         <Route path="/races" element={<RacesPage races={races} />} />
+        <Route path="/races/:season/:round" element={<RaceDetailsPage />} />
         <Route path="/standings" element={<StandingsPage races={races} />} />
       </Routes>
     </>
