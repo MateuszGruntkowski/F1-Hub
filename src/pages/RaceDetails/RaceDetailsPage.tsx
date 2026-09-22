@@ -9,6 +9,7 @@ import { getResults } from "../../api/resultsApi";
 import "./RaceDetailsPage.css";
 import type { Driver } from "../../types/driver";
 import { getRaceDateTime } from "../../utils/dateUtils";
+import { parseLapTimeToMs } from "../../utils/lapTimeUtils";
 
 export function RaceDetailsPage() {
   const params = useParams();
@@ -42,145 +43,241 @@ export function RaceDetailsPage() {
   }, [season, round]);
 
   if (!race) {
-    return <div>Loading race...</div>;
+    return <div className="page state-message">Loading race...</div>;
   }
 
   const circuitDetails = getCircuitDetails(race.Circuit);
 
   if (!circuitDetails) {
-    return <div>Loading circuit details...</div>;
+    return <div className="page state-message">Loading circuit details...</div>;
   }
 
-  const fastestLap: string | undefined = [...results].sort(
-    (a, b) => Number(a.FastestLap?.Time.time) - Number(b.FastestLap?.Time.time),
-  )[0]?.FastestLap?.Time.time;
+  const isCompleted = getRaceDateTime(race) < dayjs();
 
-  const fastestDriver: Driver | undefined = [...results].find(
-    (r) => r.FastestLap?.Time.time === fastestLap,
-  )?.Driver;
+  const sortedResults = [...results].sort((a, b) => a.position - b.position);
+
+  // Rank by parsed lap time, not the raw string — a plain Number(a.Time.time)
+  // comparison returns NaN for "1:35.867"-style times and silently breaks.
+  const bestLapResult = [...results]
+    .filter((r) => parseLapTimeToMs(r.FastestLap?.Time.time) !== null)
+    .sort(
+      (a, b) =>
+        (parseLapTimeToMs(a.FastestLap?.Time.time) ?? Infinity) -
+        (parseLapTimeToMs(b.FastestLap?.Time.time) ?? Infinity),
+    )[0];
+
+  const fastestLap = bestLapResult?.FastestLap?.Time.time;
+  const fastestDriver: Driver | undefined = bestLapResult?.Driver;
 
   return (
     <>
-      <Link to="/races">&larr; Back to races</Link>
-      <div>
-        <div>Round {round}</div>
-        <div>{getRaceDateTime(race) < dayjs() ? "Completed" : "Upcoming"}</div>
-      </div>
-      <div>
-        <div>{race.raceName}</div>
-        <div>
-          <div>
-            <div>{circuitDetails.circuitName}</div>
-            <div>Circuit</div>
-          </div>
-          <div>
-            <div>{circuitDetails.Location.country}</div>
-            <div>Location</div>
-          </div>
-          <div>
-            <div>{dayjs(race.date).format("ddd, D MMM YYYY")}</div>
-            <div>Race day</div>
-          </div>
-          <div>
-            <div>{race.time?.slice(0, 5)} UTC</div>
-            <div>Lights out</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <img
-          src={`${circuitDetails?.image}`}
-          width={400}
-          alt={circuitDetails.circuitName}
-        />
-        <div>
-          <div>{circuitDetails.circuitName}</div>
-          <div>{circuitDetails.circuitLengthKm} km</div>
-        </div>
+      <div className="breadcrumb page">
+        <Link to="/races">&larr; Back to races</Link>
       </div>
 
-      <div>
-        <div>Location</div>
-        <div>
-          <div>Country</div>
-          <div>{circuitDetails.Location.country}</div>
-        </div>
-        <div>
-          <div>Locality</div>
-          <div>{circuitDetails.Location.locality}</div>
-        </div>
-        <div>
-          <div>Type</div>
-          <div>{circuitDetails.type}</div>
-        </div>
-        <div>
-          <div>Dircetion</div>
-          <div>{circuitDetails.direction}</div>
-        </div>
-      </div>
-
-      <div>
-        <div>
-          <div>Laps</div>
-          <div>{circuitDetails.raceLaps}</div>
-        </div>
-        <div>
-          <div>Circuit Length</div>
-          <div>{circuitDetails.circuitLengthKm}</div>
-        </div>
-        <div>
-          <div>Race distance</div>
-          <div>{circuitDetails.raceDistanceKm}</div>
-        </div>
-        <div>
-          <div>Lap Record</div>
-          <div>
-            <div>{circuitDetails.lapRecord?.time}</div>
+      <header className="race-header">
+        <div className="page race-header__bar">
+          <div className="race-header__tags">
+            <span className="round-chip">Round {round}</span>
+            <span
+              className={`status-chip ${isCompleted ? "done" : "upcoming"}`}
+            >
+              {isCompleted ? "Completed" : "Upcoming"}
+            </span>
+          </div>
+          <h1>{race.raceName}</h1>
+          <div className="race-header__facts">
             <div>
-              {circuitDetails.lapRecord?.driver}{" "}
-              {circuitDetails.lapRecord?.year}
+              <strong>{circuitDetails.circuitName}</strong>Circuit
+            </div>
+            <div>
+              <strong>{circuitDetails.Location.country}</strong>Location
+            </div>
+            <div>
+              <strong>{dayjs(race.date).format("ddd, D MMM YYYY")}</strong>Race
+              day
+            </div>
+            <div>
+              <strong>{race.time?.slice(0, 5) ?? "TBC"} UTC</strong>Lights out
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div>
-        <div>Race result</div>
+      <section className="page content">
         <div>
-          Fastest lap: {fastestLap} -{" "}
-          {`${fastestDriver?.givenName} ${fastestDriver?.familyName}`}
-        </div>
-      </div>
-
-      <div className="results">
-        {[...results]
-          .sort((a, b) => a.position - b.position)
-          .map((result) => {
-            const gainedPositions: number = result.grid - result.position;
-            return (
-              <div key={result.Driver.driverId}>
-                <div>{result.position}</div>
+          <div className="track-card">
+            {circuitDetails.image ? (
+              <img
+                className="track-card__image track-card__image--photo"
+                src={circuitDetails.image}
+                alt={circuitDetails.circuitName}
+              />
+            ) : (
+              <div className="track-card__image">
                 <div>
-                  {result.Driver.givenName} {result.Driver.familyName}
+                  <span className="placeholder-icon" aria-hidden="true">
+                    🏁
+                  </span>
+                  Track layout unavailable
                 </div>
-                <div>{result.Constructor.name}</div>
-                <div>
-                  <div>{`P${result.grid}`}</div>
-                  <div>
-                    {gainedPositions > 0
-                      ? "strzałka w góre"
-                      : gainedPositions < 0
-                        ? "strzałka w dół"
-                        : "nic"}
-                  </div>
-                </div>
-                <div>{result.FastestLap?.Time.time}</div>
-                <div>{result.Time?.time}</div>
-                <div>{result.points}</div>
               </div>
-            );
-          })}
-      </div>
+            )}
+            <div className="track-card__caption">
+              <span>{circuitDetails.circuitName}</span>
+              <span>{circuitDetails.circuitLengthKm} km</span>
+            </div>
+          </div>
+
+          <div className="quick-facts">
+            <div className="quick-fact">
+              <div className="label">LAPS</div>
+              <div className="value">{circuitDetails.raceLaps}</div>
+            </div>
+            <div className="quick-fact">
+              <div className="label">RACE DISTANCE</div>
+              <div className="value">{circuitDetails.raceDistanceKm} km</div>
+            </div>
+            <div className="quick-fact">
+              <div className="label">CIRCUIT LENGTH</div>
+              <div className="value">{circuitDetails.circuitLengthKm} km</div>
+            </div>
+            <div className="quick-fact">
+              <div className="label">LAP RECORD</div>
+              <div className="value">
+                {circuitDetails.lapRecord?.time ?? "—"}
+                {circuitDetails.lapRecord && (
+                  <small>
+                    {circuitDetails.lapRecord.driver},{" "}
+                    {circuitDetails.lapRecord.year}
+                  </small>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="sidebar-stack">
+          <div className="info-card">
+            <h3>Location</h3>
+            <div className="info-row">
+              <span className="k">Country</span>
+              <span className="v">{circuitDetails.Location.country}</span>
+            </div>
+            <div className="info-row">
+              <span className="k">Locality</span>
+              <span className="v">{circuitDetails.Location.locality}</span>
+            </div>
+            <div className="info-row">
+              <span className="k">Type</span>
+              <span className="v">{circuitDetails.type}</span>
+            </div>
+            <div className="info-row">
+              <span className="k">Direction</span>
+              <span className="v">{circuitDetails.direction}</span>
+            </div>
+          </div>
+
+          {/* Placeholder — swap these dashes for a real forecast fetch later */}
+          <div className="info-card weather-card">
+            <h3>Weather</h3>
+            <div className="weather-metrics">
+              <div className="weather-metric">
+                <div className="label">AIR TEMP</div>
+                <div className="value">—</div>
+              </div>
+              <div className="weather-metric">
+                <div className="label">TRACK TEMP</div>
+                <div className="value">—</div>
+              </div>
+              <div className="weather-metric">
+                <div className="label">RAIN CHANCE</div>
+                <div className="value">—</div>
+              </div>
+              <div className="weather-metric">
+                <div className="label">WIND</div>
+                <div className="value">—</div>
+              </div>
+            </div>
+            <div className="weather-card__note">Forecast not connected yet</div>
+          </div>
+        </div>
+
+        <div className="results-section">
+          <div className="section-head">
+            <h2>Race Results</h2>
+            {isCompleted && fastestLap && (
+              <div className="fastest-lap">
+                Fastest lap <strong>{fastestLap}</strong> —{" "}
+                {fastestDriver?.givenName} {fastestDriver?.familyName}
+              </div>
+            )}
+          </div>
+
+          {sortedResults.length > 0 ? (
+            <div className="results-table">
+              <div className="results-legend">
+                <span>POS</span>
+                <span>DRIVER</span>
+                <span>TEAM</span>
+                <span>GRID</span>
+                <span>FASTEST LAP</span>
+                <span>TIME</span>
+                <span>PTS</span>
+              </div>
+
+              {sortedResults.map((result) => {
+                const gained = result.grid - result.position;
+                const isPodium = result.position <= 3;
+                const lapTime = result.FastestLap?.Time.time;
+                const isBestLap =
+                  !!lapTime && lapTime === bestLapResult?.FastestLap?.Time.time;
+
+                return (
+                  <div
+                    key={result.Driver.driverId}
+                    className={`result-row ${isPodium ? "podium" : ""}`}
+                  >
+                    <div className="pos">
+                      {String(result.position).padStart(2, "0")}
+                    </div>
+                    <div className="driver">
+                      {result.Driver.givenName} {result.Driver.familyName}
+                    </div>
+                    <div className="team">{result.Constructor.name}</div>
+                    <div className="grid">
+                      {`P${result.grid}`}
+                      {gained !== 0 && (
+                        <span
+                          className={`grid-delta ${gained > 0 ? "up" : "down"}`}
+                        >
+                          {gained > 0 ? "▲" : "▼"}
+                          {Math.abs(gained)}
+                        </span>
+                      )}
+                    </div>
+                    <div
+                      className={`fastest-lap-cell ${isBestLap ? "best" : ""}`}
+                    >
+                      {lapTime ?? <span className="tbd">—</span>}
+                    </div>
+                    <div className={`time ${result.Time ? "gap" : "retired"}`}>
+                      {result.Time?.time ?? "Retired"}
+                    </div>
+                    <div className="pts">{result.points}</div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="results-placeholder">
+              <strong>Results not available yet</strong>
+              Check back after the race finishes on{" "}
+              {dayjs(race.date).format("ddd, D MMM")}.
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }
