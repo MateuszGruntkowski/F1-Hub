@@ -15,7 +15,7 @@ export function DriversPage() {
   return (
     <>
       <div className="breadcrumb page">
-        <Link to="/home">&larr; Back to home</Link>
+        <Link to="/">&larr; Back to home</Link>
       </div>
 
       <div className="page">
