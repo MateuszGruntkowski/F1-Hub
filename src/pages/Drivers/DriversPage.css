@@ -1,0 +1,194 @@
+/* Colors, reset, and .page container already live in App.css — this
+   file only holds styles specific to the drivers listing page. */
+
+.breadcrumb {
+  padding: 20px 0 0;
+}
+
+.breadcrumb a {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.breadcrumb a:hover {
+  color: var(--flag);
+}
+
+.drivers-header {
+  padding: 18px 0 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.drivers-header h1 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.drivers-header .count {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.drivers-header .count strong {
+  color: var(--flag);
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ---------- DRIVER GRID ---------- */
+
+.driver-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  padding-bottom: 56px;
+}
+
+.driver-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.driver-card:hover {
+  border-color: var(--text-dim-2);
+  transform: translateY(-2px);
+}
+
+.driver-card__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 2px,
+      transparent 2px,
+      transparent 34px
+    ),
+    var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim-2);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.driver-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.driver-card__photo .placeholder-icon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.driver-card__number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--flag);
+  background: rgba(10, 12, 16, 0.7);
+  border: 1px solid rgba(200, 255, 61, 0.25);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.driver-card__code {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  background: rgba(10, 12, 16, 0.7);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.driver-card__body {
+  padding: 16px 18px 18px;
+}
+
+.driver-card__name {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.driver-card__nationality {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.sub {
+  display: flex;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+
+.team-swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 7px;
+  flex-shrink: 0;
+}
+
+.driver-card__link {
+  display: block;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.driver-card__link:hover {
+  color: var(--flag);
+  border-color: rgba(200, 255, 61, 0.25);
+}
+
+@media (max-width: 620px) {
+  .driver-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .driver-card__body {
+    padding: 12px 14px 14px;
+  }
+}
