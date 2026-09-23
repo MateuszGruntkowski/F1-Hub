@@ -1,14 +1,16 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import "./Header.css";
 
 export function Header() {
   return (
     <header className="header">
       <div className="page header__bar">
-        <div className="header__brand">
-          <span className="header__dot" />
-          F1 Hub
-        </div>
+        <Link to="/">
+          <div className="header__brand">
+            <span className="header__dot" />
+            F1 Hub
+          </div>
+        </Link>
         <nav className="header__nav">
           <NavLink to="/" end className="nav-link">
             Home

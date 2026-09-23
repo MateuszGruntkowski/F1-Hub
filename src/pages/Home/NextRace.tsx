@@ -41,7 +41,7 @@ export function NextRace({ races }: NextRaceProps) {
                 day
               </div>
               <div>
-                <strong>{nextRace.time?.slice(0, 5)}</strong>Lights out
+                <strong>{nextRace.time?.slice(0, 5)} UTC</strong>Lights out
               </div>
             </div>
           </div>
