@@ -100,10 +100,21 @@
 }
 
 .race-main .gp-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: "Oswald", sans-serif;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text);
+}
+
+.race-flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .race-main .circuit {

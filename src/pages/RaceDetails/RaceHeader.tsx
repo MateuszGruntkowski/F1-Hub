@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import type { CircuitDetails } from "../../types/circuit";
 import type { RaceBase } from "../../types/race";
+import { getRaceCountryFlag } from "../../constants/countryCodes";
 
 type RaceHeaderProps = {
   circuitDetails: CircuitDetails;
@@ -15,6 +16,9 @@ export function RaceHeader({
   race,
   round,
 }: RaceHeaderProps) {
+  const country = circuitDetails.Location.country;
+  const flag = getRaceCountryFlag(country);
+
   return (
     <header className="race-header">
       <div className="page race-header__bar">
@@ -30,7 +34,13 @@ export function RaceHeader({
             <strong>{circuitDetails.circuitName}</strong>Circuit
           </div>
           <div>
-            <strong>{circuitDetails.Location.country}</strong>Location
+            <strong className="race-header__country">
+              {flag && (
+                <img src={flag} alt={country} className="race-header__flag" />
+              )}
+              {country}
+            </strong>
+            Location
           </div>
           <div>
             <strong>{dayjs(race.date).format("ddd, D MMM YYYY")}</strong>Race

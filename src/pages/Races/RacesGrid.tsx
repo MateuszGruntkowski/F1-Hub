@@ -5,6 +5,7 @@ import type { Result } from "../../types/results";
 import { getSeasonWinners } from "../../api/winnersApi";
 import { getNextRace, getRaceDateTime } from "../../utils/dateUtils";
 import { Link } from "react-router";
+import { getRaceCountryFlag } from "../../constants/countryCodes";
 
 type RacesGridProps = {
   races: RaceBase[];
@@ -48,6 +49,8 @@ export function RacesGrid({ races }: RacesGridProps) {
           const winner = winners[race.round];
           const isNext = race.round === nextRound;
           const isDone = getRaceDateTime(race).isBefore(now);
+          const country = race.Circuit.Location.country;
+          const flag = getRaceCountryFlag(country);
 
           return (
             <Link
@@ -57,7 +60,17 @@ export function RacesGrid({ races }: RacesGridProps) {
             >
               <div className="round">{String(index + 1).padStart(2, "0")}</div>
               <div className="race-main">
-                <div className="gp-name">{race.raceName}</div>
+                <div className="gp-name">
+                  {flag && (
+                    <img
+                      src={flag}
+                      alt={country}
+                      className="race-flag"
+                      loading="lazy"
+                    />
+                  )}
+                  {race.raceName}
+                </div>
                 <div className="circuit">{race.Circuit.circuitName}</div>
               </div>
               <div className="race-result">
