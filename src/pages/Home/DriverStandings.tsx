@@ -1,8 +1,9 @@
 import type { DriverStanding } from "../../types/driverStanding";
 import { useDriverStandings } from "../../hooks/useDriverStandings";
+import { CURRENT_SEASON } from "../../constants/seasons";
 
 export function DriverStandings() {
-  const driverStandings = useDriverStandings();
+  const driverStandings = useDriverStandings(CURRENT_SEASON);
 
   return (
     <div className="standings-panel">

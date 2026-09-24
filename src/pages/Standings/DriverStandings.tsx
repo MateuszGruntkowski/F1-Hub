@@ -1,10 +1,11 @@
-import { useDriverStandings } from "../../hooks/useDriverStandings";
 import type { DriverStanding } from "../../types/driverStanding";
 import { getTeamColor } from "../../constants/teamColors";
 
-export function DriverStandings() {
-  const driverStandings = useDriverStandings();
+type DriverStandingsProps = {
+  driverStandings: DriverStanding[];
+};
 
+export function DriverStandings({ driverStandings }: DriverStandingsProps) {
   return (
     <div className="standings-panel">
       <div className="panel-title">

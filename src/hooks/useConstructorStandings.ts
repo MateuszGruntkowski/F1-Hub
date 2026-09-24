@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { ConstructorStanding } from "../types/constructorStanding";
 import { getConstructorStandings } from "../api/constructorStandingsApi";
 
-export function useConstructorStandings() {
+export function useConstructorStandings(season: number) {
   const [constructorStandings, setConstructorStandings] = useState<
     ConstructorStanding[]
   >([]);
@@ -10,7 +10,7 @@ export function useConstructorStandings() {
   useEffect(() => {
     async function fetchStandings() {
       try {
-        const standings = await getConstructorStandings(2026);
+        const standings = await getConstructorStandings(season);
         setConstructorStandings(standings);
       } catch (error) {
         console.log(error);
@@ -18,7 +18,7 @@ export function useConstructorStandings() {
     }
 
     fetchStandings();
-  }, []);
+  }, [season]);
 
   return constructorStandings;
 }

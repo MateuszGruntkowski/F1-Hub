@@ -9,6 +9,7 @@ import { RacesPage } from "./pages/Races/RacesPage";
 import { StandingsPage } from "./pages/Standings/StandingsPage";
 import { RaceDetailsPage } from "./pages/RaceDetails/RaceDetailsPage";
 import { DriversPage } from "./pages/Drivers/DriversPage";
+import { CURRENT_SEASON } from "./constants/seasons";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
@@ -16,7 +17,7 @@ function App() {
   useEffect(() => {
     async function fetchRaces() {
       try {
-        const races = await getRaces(2026);
+        const races = await getRaces(CURRENT_SEASON);
         setRaces(races);
       } catch (error) {
         console.log(error);

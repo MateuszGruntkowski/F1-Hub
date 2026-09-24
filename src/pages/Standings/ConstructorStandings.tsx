@@ -1,10 +1,13 @@
-import { useConstructorStandings } from "../../hooks/useConstructorStandings";
 import type { ConstructorStanding } from "../../types/constructorStanding";
 import { getTeamColor } from "../../constants/teamColors";
 
-export function ConstructorStandings() {
-  const constructorStandings = useConstructorStandings();
+type ConstructorStandingsProps = {
+  constructorStandings: ConstructorStanding[];
+};
 
+export function ConstructorStandings({
+  constructorStandings,
+}: ConstructorStandingsProps) {
   return (
     <div className="standings-panel">
       <div className="panel-title">
