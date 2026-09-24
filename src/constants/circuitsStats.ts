@@ -176,7 +176,7 @@ const circuitStats: Record<string, CircuitStats> = {
     raceLaps: 62,
     raceDistanceKm: 305.337,
     lapRecord: { time: "1:33.808", driver: "L. Hamilton", year: 2025 },
-    image: "/circuits/Marina_bay.avif",
+    image: "/circuits/Marina_Bay.avif",
   },
   americas: {
     type: "Race circuit",

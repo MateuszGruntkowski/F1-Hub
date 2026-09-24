@@ -79,7 +79,7 @@ export function RaceDetailsPage() {
 
         <div className="sidebar-stack">
           <Location circuitDetails={circuitDetails} />
-          <Weather />
+          <Weather Location={circuitDetails.Location} race={race} />
         </div>
 
         <Results race={race} isCompleted={isCompleted} results={results} />

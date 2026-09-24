@@ -286,8 +286,11 @@ a:focus-visible {
 
 .weather-card .weather-metrics {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.weather-metric {
+  text-align: center;
 }
 
 .weather-metric .label {
@@ -301,7 +304,7 @@ a:focus-visible {
   font-family: "JetBrains Mono", monospace;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-dim);
+  color: var(--text);
 }
 
 .weather-card__note {
