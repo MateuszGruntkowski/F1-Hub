@@ -1,4 +1,5 @@
 import type { Circuit } from "./circuit";
+import type { Result } from "./results";
 import type { Session } from "./session";
 
 export type RaceBase = {
@@ -18,4 +19,8 @@ export type RaceSchedule = RaceBase & {
   Sprint?: Session;
   SprintQualifying?: Session;
   SprintShootout?: Session;
+};
+
+export type RaceWithResults = RaceBase & {
+  Results: Result[];
 };

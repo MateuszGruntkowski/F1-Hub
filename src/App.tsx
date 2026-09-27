@@ -10,6 +10,7 @@ import { StandingsPage } from "./pages/Standings/StandingsPage";
 import { RaceDetailsPage } from "./pages/RaceDetails/RaceDetailsPage";
 import { DriversPage } from "./pages/Drivers/DriversPage";
 import { CURRENT_SEASON } from "./constants/seasons";
+import { DriverDetailsPage } from "./pages/DriverDetails/DriverDetailsPage";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/races" element={<RacesPage races={races} />} />
         <Route path="/races/:season/:round" element={<RaceDetailsPage />} />
         <Route path="/drivers" element={<DriversPage />} />
+        <Route path="/drivers/:driverId" element={<DriverDetailsPage />} />
         <Route path="/standings" element={<StandingsPage races={races} />} />
       </Routes>
     </>

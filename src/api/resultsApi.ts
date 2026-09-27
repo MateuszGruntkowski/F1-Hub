@@ -6,3 +6,10 @@ export async function getResults(season?: string, round?: string) {
   );
   return response.data.MRData.RaceTable.Races[0]?.Results ?? [];
 }
+
+export async function getDriverCareerResults(driverId: string) {
+  const response = await axios.get(
+    `https://api.jolpi.ca/ergast/f1/drivers/${driverId}/results/`,
+  );
+  return response.data.MRData.RaceTable.Races ?? [];
+}
