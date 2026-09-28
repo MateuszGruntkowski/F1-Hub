@@ -1,6 +1,5 @@
 import type { Result } from "../types/results";
 
-// api/resultsApi.ts
 export async function getSeasonWinners(season: string) {
   const res = await fetch(
     `https://api.jolpi.ca/ergast/f1/${season}/results/1.json?limit=100`,

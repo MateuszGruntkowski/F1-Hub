@@ -11,6 +11,7 @@ export const driversCountryCodes: Record<string, string> = {
   Canadian: "ca",
   Mexican: "mx",
   Brazilian: "br",
+  Argentine: "ar",
 };
 
 export const racesCountryCodes: Record<string, string> = {
@@ -36,7 +37,13 @@ export const racesCountryCodes: Record<string, string> = {
   UAE: "ae",
 };
 
-export function getDriverCountryFlag(country: string): string | undefined {
+export function getDriverCountryFlag(
+  country: string | undefined,
+): string | undefined {
+  if (!country) {
+    return undefined;
+  }
+
   const code = driversCountryCodes[country];
 
   if (!code) {
