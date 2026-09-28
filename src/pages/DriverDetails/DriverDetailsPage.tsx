@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getDriverCareerResults } from "../../api/resultsApi";
+import { getAllDriverResults } from "../../api/resultsApi";
 import type { RaceWithResults } from "../../types/race";
 import type { DriverStats } from "../../types/driverStats";
 import type { SeasonStats } from "../../types/season";
@@ -8,35 +8,30 @@ import type { SeasonStats } from "../../types/season";
 export function DriverDetailsPage() {
   const params = useParams();
   const driverId = params.driverId;
-  const [driverCareer, setDriverCareer] = useState<RaceWithResults[]>();
+  const [career, setDriverCareer] = useState<RaceWithResults[]>();
   const [driverStats, setDriverStats] = useState<DriverStats>();
 
   useEffect(() => {
-    async function fetchDriverCareer() {
+    async function fetchAllDriverResults() {
       if (!driverId) {
         return;
       }
 
       try {
-        const data = await getDriverCareerResults(driverId);
-        console.log(data);
+        const data = await getAllDriverResults(driverId);
         setDriverCareer(data);
-        console.log(driverCareer);
+        countStats(data);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchDriverCareer();
+    fetchAllDriverResults();
   }, [driverId]);
 
-  function countStats() {
-    if (!driverCareer) {
-      return;
-    }
-
+  function countStats(career: RaceWithResults[]) {
     const statsBySeasonMap: Record<string, SeasonStats> = {};
 
-    for (const race of driverCareer) {
+    for (const race of career) {
       const season = race.season;
       if (!season) {
         continue;
