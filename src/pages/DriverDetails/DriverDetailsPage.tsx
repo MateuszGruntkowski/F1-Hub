@@ -227,7 +227,12 @@ export function DriverDetailsPage() {
           </div>
           <div className="season-table">
             <div className="season-legend">
-              SEASON · TEAM · WINS · PODIUMS · POLES · POINTS
+              <div>Season</div>
+              <div>Team</div>
+              <div className="legend-stat">Wins</div>
+              <div className="legend-stat">Podiums</div>
+              <div className="legend-stat">Poles</div>
+              <div className="legend-stat">Points</div>
             </div>
             {driverStats?.statsBySeason.map((seasonStats) => (
               <div className="season-row" key={seasonStats.season}>

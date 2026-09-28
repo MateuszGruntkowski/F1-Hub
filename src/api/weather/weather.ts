@@ -12,7 +12,6 @@ export async function getWeather(
   const formattedDate = date.slice(0, 16);
 
   const dateIndex = response.data.hourly.time.indexOf(formattedDate);
-  console.log(dateIndex);
   if (dateIndex === -1) {
     return;
   }
