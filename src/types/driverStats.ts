@@ -1,9 +1,16 @@
-import type { SeasonStats } from "./season";
-
-export type DriverStats = {
+export type DriverTotalStats = {
   totalWins: number;
   totalPodiums: number;
   totalPolePositions: number;
   totalPoints: number;
-  statsBySeason: SeasonStats[];
+  statsBySeason: DriverSeasonStats[];
+};
+
+export type DriverSeasonStats = {
+  season: string;
+  team: string;
+  wins: number;
+  points: number;
+  podiums: number;
+  polePositions: number;
 };

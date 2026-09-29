@@ -1,6 +1,5 @@
 import type { Circuit } from "./circuit";
 import type { Result } from "./results";
-import type { Session } from "./session";
 
 export type RaceBase = {
   season: string;
@@ -23,4 +22,9 @@ export type RaceSchedule = RaceBase & {
 
 export type RaceWithResults = RaceBase & {
   Results: Result[];
+};
+
+export type Session = {
+  date: string;
+  time?: string;
 };

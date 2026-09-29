@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { DriverStanding } from "../types/driverStanding";
+import type { DriverStanding } from "../types/standings";
 import { getDriverStandings } from "../api/driverStandingsApi";
 
 export function useDriverStandings(season: string) {

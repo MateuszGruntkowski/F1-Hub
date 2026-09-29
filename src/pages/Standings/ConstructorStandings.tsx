@@ -1,5 +1,5 @@
-import type { ConstructorStanding } from "../../types/constructorStanding";
 import { getTeamColor } from "../../constants/teamColors";
+import type { ConstructorStanding } from "../../types/standings";
 
 type ConstructorStandingsProps = {
   constructorStandings: ConstructorStanding[];
@@ -21,11 +21,11 @@ export function ConstructorStandings({
       </div>
       {constructorStandings
         .slice()
-        .sort((a, b) => b.points - a.points)
+        .sort((a, b) => Number(b.points) - Number(a.points))
         .map((constructorStanding: ConstructorStanding) => (
           <div
             key={constructorStanding.Constructor.constructorId}
-            className={`standings-row${constructorStanding.position <= 3 ? " top3" : ""}`}
+            className={`standings-row${Number(constructorStanding.position) <= 3 ? " top3" : ""}`}
           >
             <div className="pos">
               {String(constructorStanding.position).padStart(2, "0")}

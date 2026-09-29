@@ -1,5 +1,5 @@
 import { driverImages } from "../../constants/driverImages";
-import type { DriverStanding } from "../../types/driverStanding";
+import type { DriverStanding } from "../../types/standings";
 import { DriverCard } from "./DriverCard";
 
 type DriversGridProps = {

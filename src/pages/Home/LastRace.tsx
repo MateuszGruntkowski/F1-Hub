@@ -17,9 +17,9 @@ export function LastRace({ races }: LastRaceProps) {
   const lastRound = lastRace?.round;
 
   useEffect(() => {
-    if (!lastSeason || !lastRound) return;
-
     async function fetchResults() {
+      if (!lastSeason || !lastRound) return;
+
       try {
         const results = await getResults(lastSeason, lastRound);
         setResults(results);
@@ -46,7 +46,7 @@ export function LastRace({ races }: LastRaceProps) {
 
       <div className="podium">
         {[...results]
-          .sort((a, b) => a.position - b.position)
+          .sort((a, b) => Number(a.position) - Number(b.position))
           .slice(0, 3)
           .map((result) => (
             <div

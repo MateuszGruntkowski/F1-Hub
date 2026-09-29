@@ -3,12 +3,12 @@ import type { Driver } from "./driver";
 
 export type Result = {
   number: string;
-  position: number;
+  position: string;
   positionText: string;
   points: string;
   Driver: Driver;
   Constructor: Constructor;
-  grid: number;
+  grid: string;
   laps: string;
   status: string;
   Time?: { millis: string; time: string };

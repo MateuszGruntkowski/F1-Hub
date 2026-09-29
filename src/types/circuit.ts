@@ -1,11 +1,17 @@
 import { getCircuitStats, type CircuitStats } from "../constants/circuitsStats";
-import type { Location } from "./location";
+
+export type CircuitLocation = {
+  lat: number;
+  long: number;
+  locality: string;
+  country: string;
+};
 
 export type Circuit = {
   circuitId: string;
   url: string;
   circuitName: string;
-  Location: Location;
+  Location: CircuitLocation;
 };
 
 export type CircuitDetails = Circuit & CircuitStats;

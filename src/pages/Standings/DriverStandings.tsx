@@ -1,5 +1,5 @@
-import type { DriverStanding } from "../../types/driverStanding";
 import { getTeamColor } from "../../constants/teamColors";
+import type { DriverStanding } from "../../types/standings";
 
 type DriverStandingsProps = {
   driverStandings: DriverStanding[];
@@ -19,13 +19,13 @@ export function DriverStandings({ driverStandings }: DriverStandingsProps) {
       </div>
       {driverStandings
         .slice()
-        .sort((a, b) => a.position - b.position)
+        .sort((a, b) => Number(a.position) - Number(b.position))
         .map((driverStanding: DriverStanding) => {
           const team = driverStanding.Constructors[0];
           return (
             <div
               key={driverStanding.Driver.driverId}
-              className={`standings-row${driverStanding.position <= 3 ? " top3" : ""}`}
+              className={`standings-row${Number(driverStanding.position) <= 3 ? " top3" : ""}`}
             >
               <div className="pos">
                 {String(driverStanding.position).padStart(2, "0")}

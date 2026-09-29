@@ -11,7 +11,9 @@ type ResultsProps = {
 };
 
 export function Results({ race, isCompleted, results }: ResultsProps) {
-  const sortedResults = [...results].sort((a, b) => a.position - b.position);
+  const sortedResults = [...results].sort(
+    (a, b) => Number(a.position) - Number(b.position),
+  );
   const bestLapResult = [...results]
     .filter((r) => parseLapTimeToMs(r.FastestLap?.Time.time) !== null)
     .sort(
@@ -48,8 +50,8 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
           </div>
 
           {sortedResults.map((result) => {
-            const gained = result.grid - result.position;
-            const isPodium = result.position <= 3;
+            const gained = Number(result.grid) - Number(result.position);
+            const isPodium = Number(result.position) <= 3;
             const lapTime = result.FastestLap?.Time.time;
             const isBestLap =
               !!lapTime && lapTime === bestLapResult?.FastestLap?.Time.time;

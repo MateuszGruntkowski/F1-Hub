@@ -1,4 +1,4 @@
-import type { DriverStanding } from "../../types/driverStanding";
+import type { DriverStanding } from "../../types/standings";
 
 type DriversHeaderProps = {
   sortedDriversByConstructors: DriverStanding[];

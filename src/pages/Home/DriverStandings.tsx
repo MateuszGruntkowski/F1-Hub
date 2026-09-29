@@ -1,6 +1,6 @@
-import type { DriverStanding } from "../../types/driverStanding";
 import { useDriverStandings } from "../../hooks/useDriverStandings";
 import { CURRENT_SEASON } from "../../constants/seasons";
+import type { DriverStanding } from "../../types/standings";
 
 export function DriverStandings() {
   const driverStandings = useDriverStandings(CURRENT_SEASON);
@@ -10,12 +10,12 @@ export function DriverStandings() {
       <div className="panel-title">Drivers</div>
       {driverStandings
         .slice()
-        .sort((a, b) => a.position - b.position)
+        .sort((a, b) => Number(a.position) - Number(b.position))
         .slice(0, 5)
         .map((driverStanding: DriverStanding) => (
           <div
             key={driverStanding.Driver.driverId}
-            className={`standings-row${driverStanding.position === 1 ? " lead" : ""}`}
+            className={`standings-row${Number(driverStanding.position) === 1 ? " lead" : ""}`}
           >
             <div className="pos">
               {String(driverStanding.position).padStart(2, "0")}

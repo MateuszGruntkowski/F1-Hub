@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getWeather } from "../../api/weather/weather";
-import type { Location } from "../../types/location";
 import { getRaceDateTime } from "../../utils/dateUtils";
 import type { RaceBase } from "../../types/race";
 import type { Weather } from "../../types/weather";
+import type { CircuitLocation } from "../../types/circuit";
 
 type WeatherProps = {
-  Location: Location;
+  Location: CircuitLocation;
   race: RaceBase;
 };
 

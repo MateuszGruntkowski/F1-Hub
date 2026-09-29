@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { getAllDriverResults } from "../../api/resultsApi";
 import type { RaceWithResults } from "../../types/race";
-import type { DriverStats } from "../../types/driverStats";
+import type {
+  DriverSeasonStats,
+  DriverTotalStats,
+} from "../../types/driverStats";
 import dayjs from "dayjs";
-import type { SeasonStats } from "../../types/season";
 import { getDriver } from "../../api/driversApi";
 import type { Constructor } from "../../types/constructor";
 import type { Driver } from "../../types/driver";
@@ -18,7 +20,7 @@ export function DriverDetailsPage() {
   const driverId = params.driverId;
   const [driver, setDriver] = useState<Driver>();
   const [currentConstructor, setCurrentConstructor] = useState<Constructor>();
-  const [driverStats, setDriverStats] = useState<DriverStats>();
+  const [driverStats, setDriverStats] = useState<DriverTotalStats>();
 
   useEffect(() => {
     async function fetchDriver() {
@@ -69,7 +71,7 @@ export function DriverDetailsPage() {
   }, [driverId]);
 
   function countStats(career: RaceWithResults[]) {
-    const statsBySeasonMap: Record<string, SeasonStats> = {};
+    const statsBySeasonMap: Record<string, DriverSeasonStats> = {};
 
     for (const race of career) {
       const season = race.season;
