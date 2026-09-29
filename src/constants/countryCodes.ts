@@ -12,6 +12,10 @@ export const driversCountryCodes: Record<string, string> = {
   Mexican: "mx",
   Brazilian: "br",
   Argentine: "ar",
+  Finnish: "fi",
+  Monegasque: "mc",
+  "New Zealander": "nz",
+  Thai: "th",
 };
 
 export const racesCountryCodes: Record<string, string> = {
