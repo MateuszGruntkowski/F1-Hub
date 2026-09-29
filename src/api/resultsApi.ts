@@ -1,6 +1,7 @@
 import axios from "axios";
+import type { Result } from "../types/results";
 
-export async function getResults(season?: string, round?: string) {
+export async function getResults(season: string, round: string) {
   const response = await axios.get(
     `https://api.jolpi.ca/ergast/f1/${season}/${round}/results/`,
   );
@@ -57,4 +58,15 @@ export async function getAllDriverResults(driverId: string) {
   }
 
   return allResults;
+}
+
+export async function getSeasonWinners(season: string) {
+  const response = await axios.get(
+    `https://api.jolpi.ca/ergast/f1/${season}/results/1.json?limit=100`,
+  );
+
+  return response.data.MRData.RaceTable.Races as Array<{
+    round: string;
+    Results: Result[];
+  }>;
 }

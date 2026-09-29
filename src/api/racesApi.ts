@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { RaceBase } from "../types/race";
 
-export async function getRaces(season: number): Promise<RaceBase[]> {
+export async function getRaces(season: string): Promise<RaceBase[]> {
   const response = await axios.get(
     `https://api.jolpi.ca/ergast/f1/${season}/races/`,
   );
@@ -9,11 +9,11 @@ export async function getRaces(season: number): Promise<RaceBase[]> {
 }
 
 export async function getRace(
-  season: number,
-  round: number,
+  season: string,
+  round: string,
 ): Promise<RaceBase> {
   const response = await axios.get(
     `https://api.jolpi.ca/ergast/f1/${season}/${round}/races/`,
   );
-  return response.data.MRData.RaceTable.Races[0] ?? {};
+  return response.data.MRData.RaceTable.Races[0];
 }

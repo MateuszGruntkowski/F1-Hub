@@ -2,10 +2,10 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import type { RaceBase } from "../../types/race";
 import type { Result } from "../../types/results";
-import { getSeasonWinners } from "../../api/winnersApi";
 import { getNextRace, getRaceDateTime } from "../../utils/dateUtils";
 import { Link } from "react-router";
 import { getRaceCountryFlag } from "../../constants/countryCodes";
+import { getSeasonWinners } from "../../api/resultsApi";
 
 type RacesGridProps = {
   races: RaceBase[];

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { DriverStanding } from "../types/driverStanding";
 import { getDriverStandings } from "../api/driverStandingsApi";
 
-export function useDriverStandings(season: number) {
+export function useDriverStandings(season: string) {
   const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
 
   useEffect(() => {

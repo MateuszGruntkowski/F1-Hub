@@ -24,8 +24,12 @@ export function RaceDetailsPage() {
 
   useEffect(() => {
     async function fetchRaceData() {
+      if (!season || !round) {
+        return;
+      }
+
       try {
-        const raceDetails = await getRace(Number(season), Number(round));
+        const raceDetails = await getRace(season, round);
         setRace(raceDetails);
       } catch (error) {
         console.log(error);
@@ -36,6 +40,10 @@ export function RaceDetailsPage() {
 
   useEffect(() => {
     async function fetchResults() {
+      if (!season || !round) {
+        return;
+      }
+
       try {
         const results = await getResults(season, round);
         setResults(results);

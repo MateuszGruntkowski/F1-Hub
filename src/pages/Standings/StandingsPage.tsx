@@ -14,7 +14,7 @@ type StandingsPageProps = {
 };
 
 export function StandingsPage({ races }: StandingsPageProps) {
-  const [season, setSeason] = useState<number>(CURRENT_SEASON);
+  const [season, setSeason] = useState<string>(CURRENT_SEASON);
   const driverStandings = useDriverStandings(season);
   const constructorStandings = useConstructorStandings(season);
 
@@ -25,7 +25,7 @@ export function StandingsPage({ races }: StandingsPageProps) {
   ).length;
 
   function handleSeasonChange(e: ChangeEvent<HTMLSelectElement>) {
-    setSeason(Number(e.target.value));
+    setSeason(e.target.value);
   }
 
   return (

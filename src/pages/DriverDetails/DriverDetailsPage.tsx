@@ -5,12 +5,13 @@ import type { RaceWithResults } from "../../types/race";
 import type { DriverStats } from "../../types/driverStats";
 import dayjs from "dayjs";
 import type { SeasonStats } from "../../types/season";
-import { getCurrentDriverConstructor, getDriver } from "../../api/driversApi";
+import { getDriver } from "../../api/driversApi";
 import type { Constructor } from "../../types/constructor";
 import type { Driver } from "../../types/driver";
 import { driverImages } from "../../constants/driverImages";
 import { getDriverCountryFlag } from "../../constants/countryCodes";
 import "./DriverDetailsPage.css";
+import { getCurrentDriverConstructor } from "../../api/constructorsApi";
 
 export function DriverDetailsPage() {
   const params = useParams();
