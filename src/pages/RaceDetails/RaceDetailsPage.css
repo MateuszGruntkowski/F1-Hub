@@ -185,7 +185,7 @@ a:focus-visible {
   justify-content: space-between;
 }
 
-.quick-facts {
+.track-quick-facts {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
@@ -196,25 +196,25 @@ a:focus-visible {
   margin-top: 20px;
 }
 
-.quick-fact {
+.track-quick-fact {
   background: var(--surface);
   padding: 16px 18px;
 }
 
-.quick-fact .label {
+.track-quick-fact .label {
   font-size: 0.72rem;
   color: var(--text-dim-2);
   letter-spacing: 0.03em;
   margin-bottom: 6px;
 }
 
-.quick-fact .value {
+.track-quick-fact .value {
   font-family: "JetBrains Mono", monospace;
   font-size: 1rem;
   font-weight: 700;
 }
 
-.quick-fact .value small {
+.track-quick-fact .value small {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
@@ -534,7 +534,7 @@ a:focus-visible {
 }
 
 @media (max-width: 620px) {
-  .quick-facts {
+  .track-quick-facts {
     grid-template-columns: 1fr 1fr;
   }
 }
