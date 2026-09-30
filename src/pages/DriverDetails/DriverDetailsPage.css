@@ -30,7 +30,15 @@
   width: 240px;
   aspect-ratio: 4 / 5;
   border-radius: 12px;
-  background: var(--surface-2);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 2px,
+      transparent 2px,
+      transparent 34px
+    ),
+    var(--surface-2);
   border: 1px solid var(--border);
   overflow: hidden;
   display: flex;
