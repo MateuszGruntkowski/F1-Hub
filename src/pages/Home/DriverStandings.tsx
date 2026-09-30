@@ -1,6 +1,7 @@
 import { useDriverStandings } from "../../hooks/useDriverStandings";
 import { CURRENT_SEASON } from "../../constants/seasons";
 import type { DriverStanding } from "../../types/standings";
+import { Link } from "react-router";
 
 export function DriverStandings() {
   const driverStandings = useDriverStandings(CURRENT_SEASON);
@@ -13,7 +14,8 @@ export function DriverStandings() {
         .sort((a, b) => Number(a.position) - Number(b.position))
         .slice(0, 5)
         .map((driverStanding: DriverStanding) => (
-          <div
+          <Link
+            to={`/drivers/${driverStanding.Driver.driverId}`}
             key={driverStanding.Driver.driverId}
             className={`standings-row${Number(driverStanding.position) === 1 ? " lead" : ""}`}
           >
@@ -30,7 +32,7 @@ export function DriverStandings() {
               {driverStanding.points}
               <span>PTS</span>
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );
