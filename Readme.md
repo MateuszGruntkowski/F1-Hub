@@ -1,4 +1,4 @@
-# F1 Dashboard
+# F1 Hub
 
 A Formula 1 web application built with **React.js** and **TypeScript**. It brings together race calendars, race results, driver profiles and championship standings in one place, along with a live countdown to the next Grand Prix and a weather forecast for the upcoming race.
 
