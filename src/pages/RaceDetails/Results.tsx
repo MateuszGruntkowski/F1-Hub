@@ -25,13 +25,13 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
   const fastestLap = bestLapResult?.FastestLap?.Time.time;
   const fastestDriver: Driver | undefined = bestLapResult?.Driver;
 
-  const leaderLaps = Number(results[0].laps);
+  const leaderLaps = Number(sortedResults[0]?.laps ?? 0);
   const formatGap = (r: Result) => {
     if (r.status === "Lapped") {
       const behind = leaderLaps - Number(r.laps);
       return `+${behind} ${behind === 1 ? "lap" : "laps"}`;
     }
-    return r.Time?.time ?? r.status;
+    return r.Time?.time && r.Time?.time !== "" ? r.Time?.time : r.status;
   };
 
   return (
