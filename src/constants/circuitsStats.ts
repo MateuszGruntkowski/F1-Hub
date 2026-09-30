@@ -36,14 +36,14 @@ const circuitStats: Record<string, CircuitStats> = {
   },
   suzuka: {
     type: "Race circuit",
-    direction: "Clockwise", // figure-eight layout, but classified clockwise
+    direction: "Clockwise",
     circuitLengthKm: 5.807,
     raceLaps: 53,
     raceDistanceKm: 307.471,
     lapRecord: { time: "1:30.965", driver: "K. Antonelli", year: 2025 },
     image: "/circuits/Suzuka.avif",
   },
-  bahrain: {
+  sepang: {
     type: "Race circuit",
     direction: "Clockwise",
     circuitLengthKm: 5.412,
@@ -152,12 +152,12 @@ const circuitStats: Record<string, CircuitStats> = {
     image: "/circuits/Monza.avif",
   },
   madring: {
-    type: "Street circuit", // hybrid street/purpose-built layout around IFEMA
-    direction: "Clockwise", // verify — very new circuit (debut 2026), sources thin
+    type: "Street circuit",
+    direction: "Clockwise",
     circuitLengthKm: 5.474,
     raceLaps: 57,
     raceDistanceKm: 308.5,
-    lapRecord: null, // verify — first held Sep 2026, no well-documented record found yet
+    lapRecord: null,
     image: "/circuits/Madring.avif",
   },
   baku: {

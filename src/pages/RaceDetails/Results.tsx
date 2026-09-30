@@ -25,6 +25,15 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
   const fastestLap = bestLapResult?.FastestLap?.Time.time;
   const fastestDriver: Driver | undefined = bestLapResult?.Driver;
 
+  const leaderLaps = Number(results[0].laps);
+  const formatGap = (r: Result) => {
+    if (r.status === "Lapped") {
+      const behind = leaderLaps - Number(r.laps);
+      return `+${behind} ${behind === 1 ? "lap" : "laps"}`;
+    }
+    return r.Time?.time ?? r.status;
+  };
+
   return (
     <div className="results-section">
       <div className="section-head">
@@ -49,7 +58,7 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
             <span>PTS</span>
           </div>
 
-          {sortedResults.map((result) => {
+          {sortedResults.map((result, index) => {
             const gained = Number(result.grid) - Number(result.position);
             const isPodium = Number(result.position) <= 3;
             const lapTime = result.FastestLap?.Time.time;
@@ -82,8 +91,10 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
                 <div className={`fastest-lap-cell ${isBestLap ? "best" : ""}`}>
                   {lapTime ?? <span className="tbd">—</span>}
                 </div>
-                <div className={`time ${result.Time ? "gap" : "retired"}`}>
-                  {result.Time?.time ?? "Retired"}
+                <div
+                  className={`time ${result.Time?.time ? "gap" : "retired"}`}
+                >
+                  {formatGap(result)}
                 </div>
                 <div className="pts">{result.points}</div>
               </div>
