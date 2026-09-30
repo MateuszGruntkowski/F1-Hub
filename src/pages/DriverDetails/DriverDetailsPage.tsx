@@ -15,6 +15,80 @@ import { getDriverCountryFlag } from "../../constants/countryCodes";
 import "./DriverDetailsPage.css";
 import { getCurrentDriverConstructor } from "../../api/constructorsApi";
 
+function calculateDriverStats(career: RaceWithResults[]) {
+  const statsBySeasonMap: Record<string, DriverSeasonStats> = {};
+
+  for (const race of career) {
+    const season = race.season;
+    if (!season) {
+      continue;
+    }
+
+    const result = race.Results.at(0);
+    const position = Number(result?.position);
+    const grid = Number(result?.grid);
+    const points = Number(result?.points ?? 0);
+    const team = result?.Constructor?.name ?? "Unknown";
+
+    statsBySeasonMap[season] ??= {
+      season,
+      team,
+      wins: 0,
+      points: 0,
+      podiums: 0,
+      polePositions: 0,
+    };
+
+    const seasonStats = statsBySeasonMap[season];
+
+    seasonStats.team = team;
+    seasonStats.points += points;
+    if (position === 1) {
+      seasonStats.wins++;
+    }
+    if (position <= 3) {
+      seasonStats.podiums++;
+    }
+    if (grid === 1) {
+      seasonStats.polePositions++;
+    }
+  }
+
+  const statsBySeason = Object.values(statsBySeasonMap).sort((a, b) =>
+    a.season.localeCompare(b.season),
+  );
+
+  return {
+    totalWins: statsBySeason.reduce((sum, s) => sum + s.wins, 0),
+    totalPodiums: statsBySeason.reduce((sum, s) => sum + s.podiums, 0),
+    totalPolePositions: statsBySeason.reduce(
+      (sum, s) => sum + s.polePositions,
+      0,
+    ),
+    totalPoints: statsBySeason.reduce((sum, s) => sum + s.points, 0),
+    statsBySeason,
+  };
+}
+
+function countAge(birthday: string | undefined) {
+  if (!birthday) {
+    return;
+  }
+
+  const today = dayjs();
+  const convertedBirthday = dayjs(birthday);
+  let age = today.year() - convertedBirthday.year();
+
+  if (
+    convertedBirthday.month() > today.month() ||
+    (convertedBirthday.month() === today.month() &&
+      convertedBirthday.date() > today.date())
+  ) {
+    age--;
+  }
+  return age;
+}
+
 export function DriverDetailsPage() {
   const params = useParams();
   const driverId = params.driverId;
@@ -46,7 +120,7 @@ export function DriverDetailsPage() {
 
       try {
         const data = await getAllDriverResults(driverId);
-        countStats(data);
+        setDriverStats(calculateDriverStats(data));
       } catch (error) {
         console.log(error);
       }
@@ -69,80 +143,6 @@ export function DriverDetailsPage() {
     }
     fetchCurrentDriverConstructor();
   }, [driverId]);
-
-  function countStats(career: RaceWithResults[]) {
-    const statsBySeasonMap: Record<string, DriverSeasonStats> = {};
-
-    for (const race of career) {
-      const season = race.season;
-      if (!season) {
-        continue;
-      }
-
-      const result = race.Results.at(0);
-      const position = Number(result?.position);
-      const grid = Number(result?.grid);
-      const points = Number(result?.points ?? 0);
-      const team = result?.Constructor?.name ?? "Unknown";
-
-      statsBySeasonMap[season] ??= {
-        season,
-        team,
-        wins: 0,
-        points: 0,
-        podiums: 0,
-        polePositions: 0,
-      };
-
-      const seasonStats = statsBySeasonMap[season];
-
-      seasonStats.team = team;
-      seasonStats.points += points;
-      if (position === 1) {
-        seasonStats.wins++;
-      }
-      if (position <= 3) {
-        seasonStats.podiums++;
-      }
-      if (grid === 1) {
-        seasonStats.polePositions++;
-      }
-    }
-
-    const statsBySeason = Object.values(statsBySeasonMap).sort((a, b) =>
-      a.season.localeCompare(b.season),
-    );
-
-    setDriverStats({
-      totalWins: statsBySeason.reduce((sum, s) => sum + s.wins, 0),
-      totalPodiums: statsBySeason.reduce((sum, s) => sum + s.podiums, 0),
-      totalPolePositions: statsBySeason.reduce(
-        (sum, s) => sum + s.polePositions,
-        0,
-      ),
-      totalPoints: statsBySeason.reduce((sum, s) => sum + s.points, 0),
-      statsBySeason,
-    });
-  }
-
-  function countAge(birthday: string | undefined) {
-    if (!birthday) {
-      return;
-    }
-
-    const today = dayjs();
-    const convertedBirthday = dayjs(birthday);
-    let age = today.year() - convertedBirthday.year();
-
-    if (
-      convertedBirthday.month() > today.month() ||
-      (convertedBirthday.month() === today.month() &&
-        convertedBirthday.date() > today.date())
-    ) {
-      age--;
-    }
-    return age;
-  }
 
   if (!driver) {
     return (

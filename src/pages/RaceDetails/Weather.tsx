@@ -30,7 +30,7 @@ export function Weather({ Location, race }: WeatherProps) {
       }
     }
     fetchWeather();
-  }, []);
+  }, [latitude, longitude, raceDateTime]);
 
   return (
     weather && (

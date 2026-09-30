@@ -58,7 +58,7 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
             <span>PTS</span>
           </div>
 
-          {sortedResults.map((result, index) => {
+          {sortedResults.map((result) => {
             const gained = Number(result.grid) - Number(result.position);
             const isPodium = Number(result.position) <= 3;
             const lapTime = result.FastestLap?.Time.time;
