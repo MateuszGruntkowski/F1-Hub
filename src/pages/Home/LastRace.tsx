@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import type { Result } from "../../types/results";
 import { getResults } from "../../api/resultsApi";
 import { getLastRace } from "../../utils/dateUtils";
+import { Link } from "react-router";
 
 type LastRaceProps = {
   races: RaceBase[];
@@ -38,10 +39,13 @@ export function LastRace({ races }: LastRaceProps) {
     <div className="last-race">
       <div className="last-race__header">
         <div className="last-race__name">Last Race — {lastRace.raceName}</div>
-        <div className="last-race__date">
+        <Link
+          to={`/races/${lastRace.season}/${lastRace.round}`}
+          className="last-race__date"
+        >
           {lastRace.Circuit.Location.country} &#183;{" "}
           {dayjs(lastRace.date).format("D MMM")}
-        </div>
+        </Link>
       </div>
 
       <div className="podium">

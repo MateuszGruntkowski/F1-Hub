@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import type { RaceBase } from "../../types/race";
 import { useCountdown } from "../../hooks/useCountdown";
 import { getNextRace } from "../../utils/dateUtils";
+import { Link } from "react-router";
 
 type NextRaceProps = {
   races: RaceBase[];
@@ -24,7 +25,12 @@ export function NextRace({ races }: NextRaceProps) {
       <div className="page next-race__inner">
         <div className="next-race__eyebrow">
           <span className="round-chip">Round {nextRace.round}</span>
-          <span className="next-label">Next race</span>
+          <Link
+            to={`/races/${nextRace.season}/${nextRace.round}`}
+            className="next-label"
+          >
+            Next race
+          </Link>
         </div>
 
         <div className="next-race__body">
