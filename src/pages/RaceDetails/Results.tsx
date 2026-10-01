@@ -3,6 +3,7 @@ import { parseLapTimeToMs } from "../../utils/lapTimeUtils";
 import type { Driver } from "../../types/driver";
 import type { RaceBase } from "../../types/race";
 import type { Result } from "../../types/results";
+import { Link } from "react-router";
 
 type ResultsProps = {
   isCompleted: boolean;
@@ -66,7 +67,8 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
               !!lapTime && lapTime === bestLapResult?.FastestLap?.Time.time;
 
             return (
-              <div
+              <Link
+                to={`/drivers/${result.Driver.driverId}`}
                 key={result.Driver.driverId}
                 className={`result-row ${isPodium ? "podium" : ""}`}
               >
@@ -97,7 +99,7 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
                   {formatGap(result)}
                 </div>
                 <div className="pts">{result.points}</div>
-              </div>
+              </Link>
             );
           })}
         </div>

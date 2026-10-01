@@ -109,7 +109,7 @@ export function DriverDetailsPage() {
   if (!driver) {
     return (
       <section className="page driver-details-content">
-        <div>Cannot load driver</div>
+        <div>loading driver profile</div>
       </section>
     );
   }
@@ -117,7 +117,7 @@ export function DriverDetailsPage() {
   if (!driverStats) {
     return (
       <section className="page driver-details-content">
-        <div>Cannot load driver</div>
+        <div>loading driver stats</div>
       </section>
     );
   }
