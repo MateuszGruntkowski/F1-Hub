@@ -148,7 +148,7 @@
   padding: 40px 0 64px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  gap: 40px;
 }
 
 .quick-facts {
@@ -184,20 +184,20 @@
   margin-top: 3px;
 }
 
-.section-head {
+.stats-section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 16px;
 }
-.section-head h2 {
+.stats-section-head h2 {
   font-family: "Oswald", sans-serif;
   font-weight: 600;
   font-size: 1.4rem;
 }
-.section-head .note {
+.stats-section-head .note {
   font-size: 0.82rem;
   color: var(--text-dim);
 }
