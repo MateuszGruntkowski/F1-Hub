@@ -8,14 +8,14 @@ import {
   YAxis,
 } from "recharts";
 import ChartCard from "./ChartCard";
-import type { SeasonRow } from "./Chartdata";
+import type { SeasonRow } from "./chartData";
 import {
   AXIS_PROPS,
   CHART_HEIGHT,
   CHART_MARGIN,
   COLORS,
   TOOLTIP_PROPS,
-} from "./Charttheme";
+} from "./chartTheme";
 
 type Props = {
   data: SeasonRow[];

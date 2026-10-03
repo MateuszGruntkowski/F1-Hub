@@ -8,14 +8,14 @@ import {
   YAxis,
 } from "recharts";
 import ChartCard from "./ChartCard";
-import type { TeamRow } from "./Chartdata";
+import type { TeamRow } from "./chartData";
 import {
   AXIS_PROPS,
   BAR_CURSOR,
   CHART_HEIGHT,
   COLORS,
   TOOLTIP_PROPS,
-} from "./Charttheme";
+} from "./chartTheme";
 
 type Props = {
   data: TeamRow[];

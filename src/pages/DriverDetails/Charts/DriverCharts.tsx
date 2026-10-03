@@ -1,6 +1,6 @@
 import AchievementsChart from "./AchievementsChart";
 import CareerProgressionChart from "./CareerProgressionChart";
-import { groupBySeason, groupByTeam } from "./Chartdata";
+import { groupBySeason, groupByTeam } from "./chartData";
 import FormTrendChart from "./FormTrendChart";
 import PointsByTeamChart from "./PointsByTeamChart";
 import PointsPerSeasonChart from "./PointsPerSeasonChart";
