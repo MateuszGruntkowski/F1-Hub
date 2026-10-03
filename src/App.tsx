@@ -11,6 +11,7 @@ import { RaceDetailsPage } from "./pages/RaceDetails/RaceDetailsPage";
 import { DriversPage } from "./pages/Drivers/DriversPage";
 import { CURRENT_SEASON } from "./constants/seasons";
 import { DriverDetailsPage } from "./pages/DriverDetails/DriverDetailsPage";
+import Footer from "./components/Footer";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/drivers/:driverId" element={<DriverDetailsPage />} />
         <Route path="/standings" element={<StandingsPage races={races} />} />
       </Routes>
+      <Footer />
     </>
   );
 }

@@ -1,0 +1,27 @@
+.footer {
+  margin-top: 80px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.footer__inner {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer__disclaimer {
+  max-width: 720px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-dim-2);
+}
+
+@media (max-width: 640px) {
+  .footer {
+    margin-top: 56px;
+  }
+}
