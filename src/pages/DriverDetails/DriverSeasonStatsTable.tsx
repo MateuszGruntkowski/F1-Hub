@@ -24,7 +24,7 @@ export function DriverSeasonStatsTable({
         {driverStats?.statsBySeason.map((seasonStats) => (
           <div className="season-row" key={seasonStats.season}>
             <div className="season">{seasonStats.season}</div>
-            <div className="team">{seasonStats.team}</div>
+            <div className="team">{seasonStats.constructorName}</div>
             <div className="stat-count">{seasonStats.wins}</div>
             <div className="stat-count">{seasonStats.podiums}</div>
             <div className="stat-count">{seasonStats.polePositions}</div>

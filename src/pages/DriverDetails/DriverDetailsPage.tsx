@@ -15,6 +15,7 @@ import { DriverSeasonStatsTable } from "./DriverSeasonStatsTable";
 import Spinner from "../../components/Spinner";
 import type { Status } from "../../types/status";
 import ErrorMessage from "../../components/ErrorMessage";
+import DriverCharts from "./Charts/DriverCharts";
 
 function calculateDriverStats(career: RaceWithResults[]) {
   const statsBySeasonMap: Record<string, DriverSeasonStats> = {};
@@ -29,11 +30,13 @@ function calculateDriverStats(career: RaceWithResults[]) {
     const position = Number(result?.position);
     const grid = Number(result?.grid);
     const points = Number(result?.points ?? 0);
-    const team = result?.Constructor?.name ?? "Unknown";
+    const constructorName = result?.Constructor?.name ?? "Unknown";
+    const constructorId = result?.Constructor?.constructorId ?? "unknown";
 
     statsBySeasonMap[season] ??= {
       season,
-      team,
+      constructorName,
+      constructorId,
       wins: 0,
       points: 0,
       podiums: 0,
@@ -42,7 +45,8 @@ function calculateDriverStats(career: RaceWithResults[]) {
 
     const seasonStats = statsBySeasonMap[season];
 
-    seasonStats.team = team;
+    seasonStats.constructorName = constructorName;
+    seasonStats.constructorId = constructorId;
     seasonStats.points += points;
     if (position === 1) {
       seasonStats.wins++;
@@ -171,6 +175,7 @@ export function DriverDetailsPage() {
           <>
             <DriverCareerStats driver={driver} driverStats={driverStats} />
             <DriverSeasonStatsTable driverStats={driverStats} />
+            <DriverCharts statsBySeason={driverStats.statsBySeason} />
           </>
         )}
       </section>

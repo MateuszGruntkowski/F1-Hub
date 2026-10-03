@@ -8,7 +8,8 @@ export type DriverTotalStats = {
 
 export type DriverSeasonStats = {
   season: string;
-  team: string;
+  constructorName: string;
+  constructorId: string;
   wins: number;
   points: number;
   podiums: number;

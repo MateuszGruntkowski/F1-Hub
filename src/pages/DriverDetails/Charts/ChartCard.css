@@ -1,0 +1,25 @@
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 20px 12px;
+  min-width: 0;
+  transition: border-color 0.2s ease;
+}
+
+.chart-card:hover {
+  border-color: var(--text-dim-2);
+}
+
+.chart-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.chart-card__subtitle {
+  margin: 2px 0 16px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
