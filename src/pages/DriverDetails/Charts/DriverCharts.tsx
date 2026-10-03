@@ -6,6 +6,7 @@ import PointsByTeamChart from "./PointsByTeamChart";
 import PointsPerSeasonChart from "./PointsPerSeasonChart";
 import "./DriverCharts.css";
 import type { DriverSeasonStats } from "../../../types/driverStats";
+import PodiumBreakdownChart from "./PodiumBreakdownChart";
 
 type Props = {
   statsBySeason: DriverSeasonStats[];
@@ -25,6 +26,7 @@ export default function DriverCharts({ statsBySeason }: Props) {
       <AchievementsChart data={seasons} />
       <PointsByTeamChart data={constructors} />
       {seasons.length > 1 && <FormTrendChart data={seasons} />}
+      <PodiumBreakdownChart data={seasons} />
     </div>
   );
 }

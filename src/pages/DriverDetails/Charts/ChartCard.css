@@ -23,3 +23,57 @@
   font-size: 13px;
   color: var(--text-dim);
 }
+
+/* ---------- Podium breakdown ---------- */
+.podium-donut {
+  position: relative;
+}
+
+.podium-donut__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.podium-donut__value {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.podium-donut__label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.podium-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 8px 0 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.podium-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.podium-legend__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.podium-legend__value {
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
