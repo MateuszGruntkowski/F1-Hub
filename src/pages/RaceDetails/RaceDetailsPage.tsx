@@ -14,54 +14,89 @@ import { TrackCard } from "./TrackCard";
 import { TrackStats } from "./TrackStats";
 import { Weather } from "./Weather";
 import { Location } from "./Location";
+import Spinner from "../../components/Spinner";
+import type { Status } from "../../types/status";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export function RaceDetailsPage() {
-  const params = useParams();
-  const { season, round } = params;
+  const { season, round } = useParams();
 
   const [race, setRace] = useState<RaceBase>();
   const [results, setResults] = useState<Result[]>([]);
+  const [raceStatus, setRaceStatus] = useState<Status>("loading");
 
   useEffect(() => {
-    async function fetchRaceData() {
-      if (!season || !round) {
-        return;
-      }
+    if (!season || !round) {
+      setRaceStatus("error");
+      return;
+    }
+
+    let ignore = false;
+
+    async function load(seasonParam: string, roundParam: string) {
+      setRaceStatus("loading");
 
       try {
-        const raceDetails = await getRace(season, round);
+        const raceDetails = await getRace(seasonParam, roundParam);
+        if (ignore) return;
         setRace(raceDetails);
+        setRaceStatus("success");
       } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchRaceData();
-  }, [season, round]);
-
-  useEffect(() => {
-    async function fetchResults() {
-      if (!season || !round) {
+        if (ignore) return;
+        console.error("getRace failed:", error);
+        setRaceStatus("error");
         return;
       }
 
       try {
-        const results = await getResults(season, round);
-        setResults(results);
+        const data = await getResults(seasonParam, roundParam);
+        if (ignore) return;
+        setResults(data);
       } catch (error) {
-        console.log(error);
+        if (ignore) return;
+        console.error("getResults failed:", error);
       }
     }
-    fetchResults();
+
+    load(season, round);
+
+    return () => {
+      ignore = true;
+    };
   }, [season, round]);
 
-  if (!race) {
-    return <div className="page state-message">Loading race...</div>;
+  if (raceStatus === "loading") {
+    return (
+      <section className="page-loading">
+        <Spinner />
+      </section>
+    );
+  }
+
+  if (raceStatus === "error" || !race) {
+    return (
+      <section className="page-error">
+        <ErrorMessage
+          message="Couldn't load this race."
+          backTo="/races"
+          backLabel="← Back to races"
+        />
+      </section>
+    );
   }
 
   const circuitDetails = getCircuitDetails(race.Circuit);
 
   if (!circuitDetails) {
-    return <div className="page state-message">Loading circuit details...</div>;
+    return (
+      <section className="page-error">
+        <ErrorMessage
+          message="No circuit details available for this race."
+          backTo="/races"
+          backLabel="&larr; Back to races"
+        />
+      </section>
+    );
   }
 
   const isCompleted = getRaceDateTime(race) < dayjs();

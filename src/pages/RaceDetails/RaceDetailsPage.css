@@ -1,6 +1,3 @@
-/* Colors, reset, and .page container already live in App.css — this
-   file only holds styles specific to the race details page. */
-
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

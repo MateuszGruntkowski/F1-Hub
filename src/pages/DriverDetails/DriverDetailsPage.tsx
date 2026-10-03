@@ -12,6 +12,9 @@ import "./DriverDetailsPage.css";
 import { DriverHero } from "./DriverHero";
 import { DriverCareerStats } from "./DriverCareerStats";
 import { DriverSeasonStatsTable } from "./DriverSeasonStatsTable";
+import Spinner from "../../components/Spinner";
+import type { Status } from "../../types/status";
+import ErrorMessage from "../../components/ErrorMessage";
 
 function calculateDriverStats(career: RaceWithResults[]) {
   const statsBySeasonMap: Record<string, DriverSeasonStats> = {};
@@ -69,55 +72,73 @@ function calculateDriverStats(career: RaceWithResults[]) {
 }
 
 export function DriverDetailsPage() {
-  const params = useParams();
-  const driverId = params.driverId;
+  const { driverId } = useParams();
   const [driver, setDriver] = useState<Driver>();
   const [driverStats, setDriverStats] = useState<DriverTotalStats>();
 
+  const [driverStatus, setDriverStatus] = useState<Status>("loading");
+  const [statsStatus, setStatsStatus] = useState<Status>("loading");
+  const [attempt, setAttempt] = useState(0);
+
   useEffect(() => {
-    async function fetchDriver() {
-      if (!driverId) {
+    if (!driverId) {
+      setDriverStatus("error");
+      return;
+    }
+
+    let ignore = false;
+
+    async function load(id: string) {
+      setDriverStatus("loading");
+      setStatsStatus("loading");
+
+      try {
+        const driverData = await getDriver(id);
+        if (ignore) return;
+        setDriver(driverData);
+        setDriverStatus("success");
+      } catch (error) {
+        if (ignore) return;
+        console.error("getDriver failed:", error);
+        setDriverStatus("error");
         return;
       }
 
       try {
-        const data = await getDriver(driverId);
-        setDriver(data);
+        const results = await getAllDriverResults(id);
+        if (ignore) return;
+        setDriverStats(calculateDriverStats(results));
+        setStatsStatus("success");
       } catch (error) {
-        console.log(error);
+        if (ignore) return;
+        console.error("getAllDriverResults failed:", error);
+        setStatsStatus("error");
       }
     }
-    fetchDriver();
-  }, [driverId]);
 
-  useEffect(() => {
-    async function fetchAllDriverResults() {
-      if (!driverId) {
-        return;
-      }
+    load(driverId);
 
-      try {
-        const data = await getAllDriverResults(driverId);
-        setDriverStats(calculateDriverStats(data));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchAllDriverResults();
-  }, [driverId]);
+    return () => {
+      ignore = true;
+    };
+  }, [driverId, attempt]);
 
-  if (!driver) {
+  if (driverStatus === "loading") {
     return (
-      <section className="page driver-details-content">
-        <div>loading driver profile</div>
+      <section className="page-loading">
+        <Spinner />
       </section>
     );
   }
 
-  if (!driverStats) {
+  if (driverStatus === "error" || !driver) {
     return (
-      <section className="page driver-details-content">
-        <div>loading driver stats</div>
+      <section className="page-error">
+        <ErrorMessage
+          message="Couldn't load this driver."
+          backTo="/drivers"
+          backLabel="← Back to drivers"
+        />
       </section>
     );
   }
@@ -131,8 +152,27 @@ export function DriverDetailsPage() {
       <DriverHero driver={driver} />
 
       <section className="page driver-details-content">
-        <DriverCareerStats driver={driver} driverStats={driverStats} />
-        <DriverSeasonStatsTable driverStats={driverStats} />
+        {statsStatus === "loading" && (
+          <div className="page-loading">
+            <Spinner />
+          </div>
+        )}
+
+        {statsStatus === "error" && (
+          <div className="page-error">
+            <ErrorMessage
+              message="Couldn't load career stats."
+              onRetry={() => setAttempt((n) => n + 1)}
+            />
+          </div>
+        )}
+
+        {statsStatus === "success" && driverStats && (
+          <>
+            <DriverCareerStats driver={driver} driverStats={driverStats} />
+            <DriverSeasonStatsTable driverStats={driverStats} />
+          </>
+        )}
       </section>
     </>
   );

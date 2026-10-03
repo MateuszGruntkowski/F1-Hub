@@ -1,0 +1,74 @@
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-dim, #868c98);
+  font-size: 14px;
+}
+
+.spinner__svg {
+  display: block;
+}
+
+.spinner__rotor {
+  transform-origin: 50px 50px;
+  animation: spinner-rotate 1.4s linear infinite;
+}
+
+.spinner__arc {
+  animation: spinner-arc 1.4s ease-in-out infinite;
+}
+
+.spinner__flag {
+  transform-origin: 50px 50px;
+  animation: spinner-orbit 2.8s linear infinite;
+}
+
+.spinner__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-arc {
+  0% {
+    stroke-dasharray: 8 92;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 55 45;
+    stroke-dashoffset: -20;
+  }
+  100% {
+    stroke-dasharray: 8 92;
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes spinner-orbit {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner__rotor {
+    animation-duration: 3s;
+  }
+  .spinner__arc {
+    animation: none;
+    stroke-dasharray: 30 70;
+  }
+  .spinner__flag {
+    animation: none;
+  }
+}
