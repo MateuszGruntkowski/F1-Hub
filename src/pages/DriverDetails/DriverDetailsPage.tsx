@@ -114,7 +114,7 @@ export function DriverDetailsPage() {
           <>
             <DriverCareerStats driver={driver} driverStats={driverStats} />
             <div className="stats-section-head">
-              <h2>Stats by Season</h2>
+              <h2>In-depth statistics</h2>
             </div>
             <DriverCharts statsBySeason={driverStats.statsBySeason} />
             <DriverSeasonStatsTable driverStats={driverStats} />
