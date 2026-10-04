@@ -12,22 +12,45 @@ import { DriversPage } from "./pages/Drivers/DriversPage";
 import { CURRENT_SEASON } from "./constants/seasons";
 import { DriverDetailsPage } from "./pages/DriverDetails/DriverDetailsPage";
 import Footer from "./components/Footer";
+import type { Status } from "./types/status";
+import Spinner from "./components/Spinner";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);
+  const [racesStatus, setRacesStatus] = useState<Status>("loading");
 
   useEffect(() => {
     async function fetchRaces() {
+      setRacesStatus("loading");
       try {
         const races = await getRaces(CURRENT_SEASON);
         setRaces(races);
+        setRacesStatus("success");
       } catch (error) {
         console.log(error);
+        setRacesStatus("error");
       }
     }
 
     fetchRaces();
   }, []);
+
+  if (racesStatus === "loading") {
+    return (
+      <section className="page-loading">
+        <Spinner />
+      </section>
+    );
+  }
+
+  if (racesStatus === "error") {
+    return (
+      <section className="page-error">
+        <ErrorMessage message="Couldn't load races." />
+      </section>
+    );
+  }
 
   return (
     <>
