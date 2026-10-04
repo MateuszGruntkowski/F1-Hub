@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 import { getDriverCountryFlag } from "../../constants/countryCodes";
 import { driverImages } from "../../constants/driverImages";
+import { CURRENT_SEASON } from "../../constants/seasons";
 import type { Driver } from "../../types/driver";
 import type { Constructor } from "../../types/constructor";
+import type { DriverStanding } from "../../types/standings";
+import type { Status } from "../../types/status";
 import { getCurrentDriverConstructor } from "../../api/constructorsApi";
 
 type DriverHeroProps = {
   driver: Driver;
+  standing?: DriverStanding;
+  standingStatus: Status;
 };
 
-export function DriverHero({ driver }: DriverHeroProps) {
+export function DriverHero({
+  driver,
+  standing,
+  standingStatus,
+}: DriverHeroProps) {
   const [currentConstructor, setCurrentConstructor] = useState<Constructor>();
   const driverId = driver.driverId;
 
@@ -28,6 +37,8 @@ export function DriverHero({ driver }: DriverHeroProps) {
     }
     fetchCurrentDriverConstructor();
   }, [driverId]);
+
+  const isLeader = standing?.position === "1";
 
   return (
     <header className="driver-hero">
@@ -57,6 +68,27 @@ export function DriverHero({ driver }: DriverHeroProps) {
               <span className="swatch"></span>
               Currently at <strong>{currentConstructor?.name}</strong>
             </div>
+
+            {standingStatus === "loading" && (
+              <span
+                className="standing-badge standing-badge--skeleton"
+                aria-hidden="true"
+              />
+            )}
+
+            {standingStatus === "success" && standing && (
+              <div
+                className={`standing-badge${isLeader ? " standing-badge--leader" : ""}`}
+              >
+                <span className="standing-badge__pos">
+                  P{standing.position}
+                </span>
+                <span className="standing-badge__meta">
+                  {CURRENT_SEASON} · {standing.points} pts
+                </span>
+              </div>
+            )}
+
             <a
               className="wiki-link"
               href={driver.url}

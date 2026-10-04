@@ -101,10 +101,11 @@
 
 .driver-hero__meta {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 16px;
-  flex-wrap: wrap;
 }
+
 .team-badge {
   display: flex;
   align-items: center;
@@ -121,6 +122,42 @@
 .team-badge strong {
   color: var(--text);
   font-weight: 500;
+}
+
+.standing-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.standing-badge__pos {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--flag);
+}
+.standing-badge__meta {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+.standing-badge--leader {
+  border-color: rgba(200, 255, 61, 0.25);
+  background: rgba(200, 255, 61, 0.08);
+}
+
+.standing-badge--skeleton {
+  width: 150px;
+  height: 32px;
+  padding: 0;
+  animation: standing-pulse 1.2s ease-in-out infinite;
+}
+@keyframes standing-pulse {
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .wiki-link {

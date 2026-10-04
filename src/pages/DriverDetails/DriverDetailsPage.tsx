@@ -13,14 +13,20 @@ import type { Status } from "../../types/status";
 import ErrorMessage from "../../components/ErrorMessage";
 import DriverCharts from "./Charts/DriverCharts";
 import { calculateDriverStats } from "./calculateDriverStats";
+import type { DriverStanding } from "../../types/standings";
+import { getDriverStandingsForDriver } from "../../api/driverStandingsApi";
+import { CURRENT_SEASON } from "../../constants/seasons";
 
 export function DriverDetailsPage() {
   const { driverId } = useParams();
   const [driver, setDriver] = useState<Driver>();
   const [driverStats, setDriverStats] = useState<DriverTotalStats>();
+  const [currentSeasonStanding, setCurrentSeasonStanding] =
+    useState<DriverStanding>();
 
   const [driverStatus, setDriverStatus] = useState<Status>("loading");
   const [statsStatus, setStatsStatus] = useState<Status>("loading");
+  const [standingStatus, setStandingStatus] = useState<Status>("loading");
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -34,6 +40,7 @@ export function DriverDetailsPage() {
     async function load(id: string) {
       setDriverStatus("loading");
       setStatsStatus("loading");
+      setStandingStatus("loading");
 
       try {
         const driverData = await getDriver(id);
@@ -47,16 +54,36 @@ export function DriverDetailsPage() {
         return;
       }
 
-      try {
-        const results = await getAllDriverResults(id);
-        if (ignore) return;
-        setDriverStats(calculateDriverStats(results));
-        setStatsStatus("success");
-      } catch (error) {
-        if (ignore) return;
-        console.error("getAllDriverResults failed:", error);
-        setStatsStatus("error");
+      async function loadStats() {
+        try {
+          const results = await getAllDriverResults(id);
+          if (ignore) return;
+          setDriverStats(calculateDriverStats(results));
+          setStatsStatus("success");
+        } catch (error) {
+          if (ignore) return;
+          console.error("getAllDriverResults failed:", error);
+          setStatsStatus("error");
+        }
       }
+
+      async function loadStanding() {
+        try {
+          const standings = await getDriverStandingsForDriver(
+            CURRENT_SEASON,
+            id,
+          );
+          if (ignore) return;
+          setCurrentSeasonStanding(standings);
+          setStandingStatus("success");
+        } catch (error) {
+          if (ignore) return;
+          console.error("getDriverStandingsForDriver failed:", error);
+          setStandingStatus("error");
+        }
+      }
+
+      await Promise.all([loadStats(), loadStanding()]);
     }
 
     load(driverId);
@@ -92,7 +119,11 @@ export function DriverDetailsPage() {
         <Link to="/drivers">← Back to drivers</Link>
       </div>
 
-      <DriverHero driver={driver} />
+      <DriverHero
+        driver={driver}
+        standing={currentSeasonStanding}
+        standingStatus={statsStatus}
+      />
 
       <section className="page driver-details-content">
         {statsStatus === "loading" && (
