@@ -122,7 +122,7 @@ export function DriverDetailsPage() {
       <DriverHero
         driver={driver}
         standing={currentSeasonStanding}
-        standingStatus={statsStatus}
+        standingStatus={standingStatus}
       />
 
       <section className="page driver-details-content">
