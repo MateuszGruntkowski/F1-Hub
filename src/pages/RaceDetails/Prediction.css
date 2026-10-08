@@ -1,0 +1,297 @@
+/* ---------- PREDICTION ---------- */
+
+.pred-warning {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--accent-soft);
+  border: 1px solid rgba(228, 0, 43, 0.3);
+  border-radius: 10px;
+}
+
+/* --- podium cards --- */
+
+.pred-podiums {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.pred-podium {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 22px 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pred-podium--p1 {
+  border-color: rgba(200, 255, 61, 0.35);
+  background:
+    radial-gradient(
+      ellipse 260px 160px at 50% -10%,
+      rgba(200, 255, 61, 0.1),
+      transparent 70%
+    ),
+    var(--surface);
+}
+
+.pred-podium__place {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim-2);
+}
+
+.pred-podium--p1 .pred-podium__place {
+  color: var(--flag);
+}
+
+.pred-podium__photo {
+  width: 104px;
+  height: 104px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.pred-podium--p1 .pred-podium__photo {
+  border-color: var(--flag);
+}
+
+.pred-podium__photo--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.4rem;
+  color: var(--text-dim);
+}
+
+.pred-podium__name {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.pred-podium__team {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.pred-podium__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.pred-podium__stats .label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-dim-2);
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.pred-podium__stats .value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.pred-podium--p1 .pred-podium__stats > div:first-child .value {
+  color: var(--flag);
+}
+
+/* --- table --- */
+
+.pred-legend,
+.pred-row {
+  display: grid;
+  grid-template-columns: 44px 1.4fr 1.1fr repeat(4, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px 22px;
+}
+
+.pred-legend {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.pred-row {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.pred-row:last-child {
+  border-bottom: none;
+}
+
+.pred-row:hover {
+  background: var(--surface-2);
+}
+
+.pred-row .pos {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-dim-2);
+}
+
+.pred-row.podium .pos {
+  color: var(--flag);
+}
+
+.pred-row .driver {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.pred-code {
+  margin-left: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim-2);
+}
+
+.pred-row .team {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+}
+
+.pred-prob {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pred-prob__value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.84rem;
+  color: var(--text-dim);
+}
+
+.pred-prob--strong .pred-prob__value {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.pred-prob__bar {
+  display: block;
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pred-row:hover .pred-prob__bar {
+  background: var(--border);
+}
+
+.pred-prob__fill {
+  display: block;
+  height: 100%;
+  background: var(--text-dim-2);
+  border-radius: 999px;
+}
+
+.pred-prob--strong .pred-prob__fill {
+  background: var(--flag);
+}
+
+.pred-note {
+  margin-top: 16px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+  .pred-podiums {
+    grid-template-columns: 1fr;
+  }
+
+  .pred-podium {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 0 16px;
+    padding: 16px;
+  }
+
+  .pred-podium__place {
+    top: 10px;
+    right: 14px;
+    left: auto;
+  }
+
+  .pred-podium__photo {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 0;
+  }
+
+  .pred-podium__name {
+    align-self: flex-end;
+  }
+
+  .pred-podium__team {
+    flex-basis: calc(100% - 88px);
+    margin-bottom: 0;
+  }
+
+  .pred-podium__stats {
+    margin-top: 14px;
+  }
+
+  .pred-hide-sm {
+    display: none;
+  }
+
+  .pred-legend,
+  .pred-row {
+    grid-template-columns: 28px 1.3fr repeat(4, 1fr);
+    gap: 8px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .pred-code {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  /* na wąskich ekranach zostaw tylko Wygrana + Podium */
+  .pred-legend span:nth-child(n + 6),
+  .pred-row > .pred-prob:nth-child(n + 6) {
+    display: none;
+  }
+
+  .pred-legend,
+  .pred-row {
+    grid-template-columns: 28px 1fr 1fr 1fr;
+  }
+}

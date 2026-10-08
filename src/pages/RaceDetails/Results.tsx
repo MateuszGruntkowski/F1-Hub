@@ -4,6 +4,7 @@ import type { Driver } from "../../types/driver";
 import type { RaceBase } from "../../types/race";
 import type { Result } from "../../types/results";
 import { Link } from "react-router";
+import Prediction from "./Prediction";
 
 type ResultsProps = {
   isCompleted: boolean;
@@ -104,10 +105,13 @@ export function Results({ race, isCompleted, results }: ResultsProps) {
           })}
         </div>
       ) : (
-        <div className="results-placeholder">
-          <strong>Results not available yet</strong>
-          Check back after the race finishes on{" "}
-          {dayjs(race.date).format("ddd, D MMM")}.
+        // <div className="results-placeholder">
+        //   <strong>Results not available yet</strong>
+        //   Check back after the race finishes on{" "}
+        //   {dayjs(race.date).format("ddd, D MMM")}.
+        // </div>
+        <div className="results-section">
+          <Prediction season={race.season} round={race.round} />
         </div>
       )}
     </div>
