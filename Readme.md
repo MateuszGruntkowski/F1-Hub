@@ -4,6 +4,7 @@ A Formula 1 web application built with **React.js** and **TypeScript**, backed b
 
 ## Table of Contents
 
+- [Preview](#preview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [System Architecture](#system-architecture)
@@ -13,6 +14,9 @@ A Formula 1 web application built with **React.js** and **TypeScript**, backed b
 - [Project Structure](#project-structure)
 - [Notes](#notes)
 - [Acknowledgements](#acknowledgements)
+
+## Preview
+https://github.com/user-attachments/assets/14a18150-1a88-496e-bbf6-a5c4c66d1603
 
 ## Features
 
