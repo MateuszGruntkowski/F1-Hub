@@ -18,3 +18,10 @@ export function getLastRace(races: RaceBase[]): RaceBase | undefined {
     .sort((a, b) => getRaceDateTime(b).valueOf() - getRaceDateTime(a).valueOf())
     .find((race) => getRaceDateTime(race).valueOf() < now.valueOf());
 }
+
+export const formatDateTime = (iso: string): string => {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime())
+    ? iso
+    : d.toLocaleString("pl-PL", { dateStyle: "medium", timeStyle: "short" });
+};

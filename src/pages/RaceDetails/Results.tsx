@@ -4,7 +4,7 @@ import type { Driver } from "../../types/driver";
 import type { RaceBase } from "../../types/race";
 import type { Result } from "../../types/results";
 import { Link } from "react-router";
-import Prediction from "./Prediction";
+import Prediction from "./Predictions/Prediction";
 
 type ResultsProps = {
   isCompleted: boolean;
