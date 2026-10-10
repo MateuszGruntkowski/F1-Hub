@@ -19,9 +19,8 @@ export function getLastRace(races: RaceBase[]): RaceBase | undefined {
     .find((race) => getRaceDateTime(race).valueOf() < now.valueOf());
 }
 
-export const formatDateTime = (iso: string): string => {
-  const d = new Date(iso);
-  return Number.isNaN(d.getTime())
-    ? iso
-    : d.toLocaleString("pl-PL", { dateStyle: "medium", timeStyle: "short" });
-};
+// "2026-10-10T12:22:00Z" -> "10 Oct 2026, 14:22"
+export function formatDateTime(iso: string): string {
+  const d = dayjs(iso);
+  return d.isValid() ? d.format("D MMM YYYY, HH:mm") : iso;
+}
