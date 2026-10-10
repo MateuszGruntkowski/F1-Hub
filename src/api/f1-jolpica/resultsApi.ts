@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Result } from "../types/results";
+import type { Result } from "../../types/results";
 
 export async function getResults(season: string, round: string) {
   const response = await axios.get(

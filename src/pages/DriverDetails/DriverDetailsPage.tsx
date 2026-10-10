@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { getAllDriverResults } from "../../api/resultsApi";
 import type { DriverTotalStats } from "../../types/driverStats";
-import { getDriver } from "../../api/driversApi";
 import type { Driver } from "../../types/driver";
 import "./DriverDetailsPage.css";
 import { DriverHero } from "./DriverHero";
@@ -14,8 +12,10 @@ import ErrorMessage from "../../components/ErrorMessage";
 import DriverCharts from "./Charts/DriverCharts";
 import { calculateDriverStats } from "./calculateDriverStats";
 import type { DriverStanding } from "../../types/standings";
-import { getDriverStandingsForDriver } from "../../api/driverStandingsApi";
 import { CURRENT_SEASON } from "../../constants/seasons";
+import { getDriver } from "../../api/f1-jolpica/driversApi";
+import { getAllDriverResults } from "../../api/f1-jolpica/resultsApi";
+import { getDriverStandingsForDriver } from "../../api/f1-jolpica/driverStandingsApi";
 
 export function DriverDetailsPage() {
   const { driverId } = useParams();

@@ -6,7 +6,7 @@ import type { Driver } from "../../types/driver";
 import type { Constructor } from "../../types/constructor";
 import type { DriverStanding } from "../../types/standings";
 import type { Status } from "../../types/status";
-import { getCurrentDriverConstructor } from "../../api/constructorsApi";
+import { getCurrentDriverConstructor } from "../../api/f1-jolpica/constructorsApi";
 
 type DriverHeroProps = {
   driver: Driver;

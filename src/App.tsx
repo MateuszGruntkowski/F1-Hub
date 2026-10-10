@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getRaces } from "./api/racesApi";
 import "./App.css";
 import type { RaceBase } from "./types/race";
 import { Header } from "./components/Header";
@@ -15,6 +14,7 @@ import Footer from "./components/Footer";
 import type { Status } from "./types/status";
 import Spinner from "./components/Spinner";
 import ErrorMessage from "./components/ErrorMessage";
+import { getRaces } from "./api/f1-jolpica/racesApi";
 
 function App() {
   const [races, setRaces] = useState<RaceBase[]>([]);

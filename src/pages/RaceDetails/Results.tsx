@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { parseLapTimeToMs } from "../../utils/lapTimeUtils";
 import type { Driver } from "../../types/driver";
 import type { RaceBase } from "../../types/race";

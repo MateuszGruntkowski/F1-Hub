@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { RaceBase } from "../types/race";
+import type { RaceBase } from "../../types/race";
 
 export async function getRaces(season: string): Promise<RaceBase[]> {
   const response = await axios.get(

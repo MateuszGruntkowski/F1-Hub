@@ -5,7 +5,7 @@ import type { Result } from "../../types/results";
 import { getNextRace, getRaceDateTime } from "../../utils/dateUtils";
 import { Link } from "react-router";
 import { getRaceCountryFlag } from "../../constants/countryCodes";
-import { getSeasonWinners } from "../../api/resultsApi";
+import { getSeasonWinners } from "../../api/f1-jolpica/resultsApi";
 
 type RacesGridProps = {
   races: RaceBase[];

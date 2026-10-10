@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPredictions } from "../../../api/predictionsApi";
+import { getPredictions } from "../../../api/predictions/predictionsApi";
 import "./Prediction.css";
 import { formatDateTime } from "../../../utils/dateUtils";
 import { snakeToTitleCase } from "../../../utils/formatUtils";

@@ -1,6 +1,3 @@
-/* Colors, reset, and .page container already live in App.css — this
-   file only holds styles specific to the drivers listing page. */
-
 .breadcrumb {
   padding: 20px 0 0;
 }

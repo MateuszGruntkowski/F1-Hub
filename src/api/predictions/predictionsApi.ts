@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { PredictionsResponse } from "../types/predictions";
+import type { PredictionsResponse } from "../../types/predictions";
 
 // VITE_PREDICTIONS_API_URL=http://localhost:8000
 const PREDICTIONS_API_URL: string =

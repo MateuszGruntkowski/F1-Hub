@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { getRace } from "../../api/racesApi";
 import type { RaceBase } from "../../types/race";
 import dayjs from "dayjs";
 import { getCircuitDetails } from "../../types/circuit";
 import type { Result } from "../../types/results";
-import { getResults } from "../../api/resultsApi";
 import "./RaceDetailsPage.css";
 import { getRaceDateTime } from "../../utils/dateUtils";
 import { RaceHeader } from "./RaceHeader";
@@ -17,6 +15,8 @@ import { Location } from "./Location";
 import Spinner from "../../components/Spinner";
 import type { Status } from "../../types/status";
 import ErrorMessage from "../../components/ErrorMessage";
+import { getRace } from "../../api/f1-jolpica/racesApi";
+import { getResults } from "../../api/f1-jolpica/resultsApi";
 
 export function RaceDetailsPage() {
   const { season, round } = useParams();

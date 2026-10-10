@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getConstructorStandings } from "../api/constructorStandingsApi";
 import type { ConstructorStanding } from "../types/standings";
+import { getConstructorStandings } from "../api/f1-jolpica/constructorStandingsApi";
 
 export function useConstructorStandings(season: string) {
   const [constructorStandings, setConstructorStandings] = useState<

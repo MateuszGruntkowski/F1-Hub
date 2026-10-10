@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { DriverStanding } from "../types/standings";
+import type { DriverStanding } from "../../types/standings";
 export async function getDriverStandings(season: string) {
   const response = await axios.get(
     `https://api.jolpi.ca/ergast/f1/${season}/driverstandings/`,
